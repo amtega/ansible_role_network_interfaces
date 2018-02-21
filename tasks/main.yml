@@ -1,2 +1,4 @@
 ---
 # Role tasks
+- name: Configure persistent net names in udev
+  include_tasks: config_udev.yml

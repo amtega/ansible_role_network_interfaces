@@ -1,2 +1,59 @@
 ---
 # Role default lower priority variables
+# Network general parameters
+hostname: "{{ ansible_hostname }}"
+gateway: 10.0.2.1
+
+# NIC configuration variables
+nics:
+  - logicalname: service-01
+    macaddress: "{{ maclist[0] | default('00:00:00:00:00:00') }}"
+    ipv4:
+      - ipaddr: 10.0.2.10
+        mask: 10.0.2.0/24
+    vlan: no
+    vlanid:
+    route:
+    bound: no
+
+  - logicalname: management-01
+    macaddress: "{{ maclist[1] | default('00:00:00:00:00:01') }}"
+    ipv4:
+      - ipaddr: 10.0.2.11
+        mask: 10.0.2.0/24
+    vlan: no
+    vlanid:
+    route:
+      - netmask: 10.0.2.0/24
+        gateway: 10.0.2.1
+    bound: no
+
+  - logicalname: backup-01
+    macaddress: "{{ maclist[2] | default('00:00:00:00:00:02') }}"
+    ipv4:
+      - ipaddr: 10.0.2.12
+        mask: 10.0.2.0/24
+    vlan: no
+    vlanid:
+    route:
+    bound: no
+
+  - logicalname: monitor-01
+    macaddress: "{{ maclist[3] | default('00:00:00:00:00:03')}}"
+    ipv4:
+      - ipaddr: 10.0.2.13
+        mask: 10.0.2.0/24
+    vlan: no
+    vlanid:
+    route:
+    bound: no
+
+  - logicalname: nas-01
+    macaddress: "{{ maclist[4] | default('00:00:00:00:00:04') }}"
+    ipv4:
+      - ipaddr: 10.0.2.14
+        mask: 10.0.2.0/24
+    vlan: no
+    vlanid:
+    route:
+    bound: no

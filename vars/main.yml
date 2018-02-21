@@ -1,2 +1,9 @@
 ---
 # Role variables
+maclist: "{{ ansible_interfaces| difference(['lo']) |
+             map('regex_replace', '^(.*)$', 'ansible_\\1' ) |
+             map('extract', hostvars[inventory_hostname], 'macaddress')  |
+             list }}"
+
+#udev_persistent_net_rules_path : /etc/udev/rules.d/70-persistent-net.rules
+udev_persistent_net_rules_path : /home/jmouron/70-persistent-net.rules

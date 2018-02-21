@@ -1,2 +1,8 @@
 ---
 # Tasks for tesing role
+- name: Temporal test for templates in localhost
+  hosts: localhost
+  roles:
+    - amtega.network_interfaces
+  tags:
+    - idempotence
