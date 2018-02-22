@@ -5,5 +5,7 @@ maclist: "{{ ansible_interfaces| difference(['lo']) |
              map('extract', hostvars[inventory_hostname], 'macaddress')  |
              list }}"
 
-#udev_persistent_net_rules_path : /etc/udev/rules.d/70-persistent-net.rules
-udev_persistent_net_rules_path : /home/jmouron/70-persistent-net.rules
+#udev_persistent_net_rules_path : /etc/udev/rules.d
+udev_persistent_net_rules_path : /home/jmouron
+#network_scripts_path: /etc/sysconfig/network-scripts
+network_scripts_path: /home/jmouron

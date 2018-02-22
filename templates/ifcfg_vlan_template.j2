@@ -1,0 +1,15 @@
+{{ ansible_managed | comment }}
+
+VLAN=yes
+DEVICE={{ item.logicalname }}.{{ item.vlanid }}
+NAME="{{ item.logicalname }}.{{ item.vlanid }}"
+TYPE=Ethernet
+ONBOOT=yes
+NM_CONTROLLED=no
+BOOTPROTO=static
+HWADDR={{ item.macaddress }}
+IPADDR={{ item.ipv4[0].ipaddr }}
+PREFIX={{ item.ipv4[0].cidr }}
+MTU={{ item.mtu }} # Si se va a configurar una distinta del estándar ethernet
+IPV4_FAILURE_FATAL=yes
+IPV6INIT=no

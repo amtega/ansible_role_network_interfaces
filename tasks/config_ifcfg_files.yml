@@ -1,0 +1,22 @@
+---
+
+- name: Create a ifcfg config file for every interface without vlanid
+  template:
+    src: ifcfg_template.j2
+    dest: "{{ network_scripts_path }}/ifcfg-{{ item.logicalname }}"
+  with_items: "{{ nics }}"
+  when: item.vlanid is undefined
+
+- name: Create a ifcfg config file for every base device for vlan tagged interfaces
+  template:
+    src: ifcfg_vlan_base_template.j2
+    dest: "{{ network_scripts_path }}/ifcfg-{{ item.logicalname }}"
+  with_items: "{{ nics }}"
+  when: item.vlanid is defined
+
+- name: Create a ifcfg config file for every interface vith vlanid
+  template:
+    src: ifcfg_vlan_template.j2
+    dest: "{{ network_scripts_path }}/ifcfg-{{ item.logicalname }}.{{ item.vlanid }}"
+  with_items: "{{ nics }}"
+  when: item.vlanid is defined
