@@ -11,6 +11,8 @@ nics:
     ipv4:
       - ipaddr: 10.0.2.10
         cidr: 24
+      - ipaddr: 10.0.2.50
+        cidr: 24
     mtu: 1500
     route:
     bound: no

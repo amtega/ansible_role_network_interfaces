@@ -1,14 +1,21 @@
 {{ ansible_managed | comment }}
 
-DEVICE={{ item.logicalname }}
-NAME="{{ item.logicalname }}"
+DEVICE={{ device.logicalname }}
+NAME="{{ device.logicalname }}"
 TYPE=Ethernet
 ONBOOT=yes
 NM_CONTROLLED=no
 BOOTPROTO=static
-HWADDR={{ item.macaddress }}
-IPADDR={{ item.ipv4[0].ipaddr }}
-PREFIX={{ item.ipv4[0].cidr }}
-MTU={{ item.mtu }} # Si se va a configurar una distinta del estándar ethernet
+HWADDR={{ device.macaddress }}
+{% for ip in device.ipv4 %}
+{% if loop.index == 1 %}
+IPADDR={{ ip.ipaddr }}
+PREFIX={{ ip.cidr }}
+{% else %}
+IPADDR{{ loop.index }}={{ ip.ipaddr }}
+PREFIX{{ loop.index }}={{ ip.cidr  }}
+{% endif %}
+{% endfor %}
+MTU={{ device.mtu }}
 IPV4_FAILURE_FATAL=yes
 IPV6INIT=no
