@@ -1,0 +1,4 @@
+{{ ansible_managed | comment }}
+{% for route in device.route %}
+{{ route.netmask }} via {{ route.gateway }}
+{% endfor %}
