@@ -5,6 +5,19 @@ hostname: "{{ ansible_hostname }}"
 gateway: 10.0.2.1
 
 # NICs configuration variable
+#
+# Every nic is defined by a list of attributes. Since config files will be created
+# controlling if attribute is defined, only definied if needed
+######
+# List of attributes
+######
+# logicalname:     // Required
+# macaddress:      // Required
+# ipv4:            // List of ip and cidr mask. Required
+# mtu:             // Required
+# route:           // List of netmask and gateway. Only defined if needed
+# route_multicast: // Boolean. Only defined if needed
+# vlanid:          //  Only defined if needed
 nics:
   - logicalname: service-01
     macaddress: "{{ maclist[0] | default('00:00:00:00:00:00') }}"
@@ -14,8 +27,6 @@ nics:
       - ipaddr: 10.0.2.50
         cidr: 24
     mtu: 1500
-    route:
-    bound: no
 
   - logicalname: management-01
     macaddress: "{{ maclist[1] | default('00:00:00:00:00:01') }}"
@@ -26,7 +37,6 @@ nics:
     route:
       - netmask: 10.0.2.0/24
         gateway: 10.0.2.1
-    bound: no
 
   - logicalname: backup-01
     macaddress: "{{ maclist[2] | default('00:00:00:00:00:02') }}"
@@ -35,8 +45,6 @@ nics:
         cidr: 24
     mtu: 9000
     vlanid: 101
-    route:
-    bound: no
 
   - logicalname: monitor-01
     macaddress: "{{ maclist[3] | default('00:00:00:00:00:03')}}"
@@ -44,8 +52,6 @@ nics:
       - ipaddr: 10.0.2.13
         cidr: 24
     mtu: 1500
-    route:
-    bound: no
 
   - logicalname: nas-01
     macaddress: "{{ maclist[4] | default('00:00:00:00:00:04') }}"
@@ -53,5 +59,3 @@ nics:
       - ipaddr: 10.0.2.14
         cidr: 24
     mtu: 9000
-    route:
-    bound: no
