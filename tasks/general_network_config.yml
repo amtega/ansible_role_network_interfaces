@@ -1,0 +1,5 @@
+---
+- name: Create dns configuration file
+  template:
+    src: dns_config_template.j2
+    dest: "{{ dns_config_file }}"

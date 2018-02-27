@@ -1,7 +1,13 @@
 ---
 # Role tasks
+- name: Configure general network and dns search parameters
+  include_tasks: general_network_config.yml
+
 - name: Configure persistent net names in udev
   include_tasks: config_udev.yml
 
 - name: Create ifcfg files for nic devices
   include_tasks: config_ifcfg_files.yml
+
+- name: Create route files for nic devices if needed
+  include_tasks: config_route_files.yml

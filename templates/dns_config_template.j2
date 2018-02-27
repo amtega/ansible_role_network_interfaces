@@ -1,0 +1,4 @@
+domain {{ dns_domain }}
+search {{ dns_search | join(", ")}}
+nameserver {{ dns_nameserver | join(", ") }}
+options {{ dns_options | join(" ") }}

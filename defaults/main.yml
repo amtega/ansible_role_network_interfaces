@@ -4,6 +4,17 @@
 hostname: "{{ ansible_hostname }}"
 gateway: 10.0.2.1
 
+# DNS resolv file variables
+dns_domain: acme.com
+dns_search:
+  - acme.com
+  - xunta.es
+dns_nameserver:
+  - 10.180.188.32
+dns_options:
+  - timeout:1
+  - rotate
+
 # NICs configuration variable
 #
 # Every nic is defined by a list of attributes. Since config files will be created
@@ -27,6 +38,7 @@ nics:
       - ipaddr: 10.0.2.50
         cidr: 24
     mtu: 1500
+    route_multicast: yes
 
   - logicalname: management-01
     macaddress: "{{ maclist[1] | default('00:00:00:00:00:01') }}"
