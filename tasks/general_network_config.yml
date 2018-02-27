@@ -2,4 +2,9 @@
 - name: Create dns configuration file
   template:
     src: dns_config_template.j2
-    dest: "{{ dns_config_file }}"
+    dest: "{{ dns_config_file_path }}"
+
+- name: Create a general network parameters file
+  template:
+    src: sysconfig_network_template.j2
+    dest: "{{ sysconfig_network_file_path }}"
