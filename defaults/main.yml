@@ -65,9 +65,9 @@ nics:
         cidr: 24
     mtu: 1500
 
-  - logicalname: nas-01
-    macaddress: "{{ maclist[4] | default('00:00:00:00:00:04') }}"
-    ipv4:
-      - ipaddr: 10.0.2.14
-        cidr: 24
-    mtu: 9000
+#  - logicalname: nas-01
+#    macaddress: "{{ maclist[4] | default('00:00:00:00:00:04') }}"
+#    ipv4:
+#      - ipaddr: 10.0.2.14
+#        cidr: 24
+#    mtu: 9000

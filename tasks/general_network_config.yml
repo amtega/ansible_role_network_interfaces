@@ -1,4 +1,13 @@
 ---
+- name: Install 802.1q kernel module
+  shell: modprobe -i 8021q
+
+- name: Remove old icfg-interface config config files
+  file:
+    path: "{{ network_scripts_path }}/ifcg-{{ item }}"
+    state: absent
+  with_items: "{{ ansible_interfaces| difference(['lo']) }}"
+  
 - name: Create dns configuration file
   template:
     src: dns_config_template.j2
