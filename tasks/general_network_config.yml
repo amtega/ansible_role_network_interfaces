@@ -4,10 +4,10 @@
 
 - name: Remove old icfg-interface config config files
   file:
-    path: "{{ network_scripts_path }}/ifcg-{{ item }}"
+    path: "{{ network_scripts_path }}/ifcfg-{{ item }}"
     state: absent
   with_items: "{{ ansible_interfaces| difference(['lo']) }}"
-  
+
 - name: Create dns configuration file
   template:
     src: dns_config_template.j2

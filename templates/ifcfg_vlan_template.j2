@@ -17,6 +17,5 @@ IPADDR{{ loop.index }}={{ ip.ipaddr }}
 PREFIX{{ loop.index }}={{ ip.cidr  }}
 {% endif %}
 {% endfor %}
-MTU={{ device.mtu }}
 IPV4_FAILURE_FATAL=yes
 IPV6INIT=no
