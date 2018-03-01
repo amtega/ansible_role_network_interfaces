@@ -1,10 +1,10 @@
 ---
 # Role tasks
-- name: Configure general network and dns search parameters
-  include_tasks: general_network_config.yml
-
 - name: Disable NetworkManager
   include_tasks: disable_NetworkManager.yml
+  
+- name: Configure general network and dns search parameters
+  include_tasks: general_network_config.yml
 
 - name: Configure persistent net names in udev
   include_tasks: config_udev.yml
