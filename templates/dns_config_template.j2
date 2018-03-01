@@ -1,4 +1,6 @@
 domain {{ dns_domain }}
-search {{ dns_search | join(", ")}}
-nameserver {{ dns_nameserver | join(", ") }}
+search {{ dns_search | join(" ")}}
+{% for server in dns_nameserver %}
+nameserver {{ server }}
+{% endfor %}
 options {{ dns_options | join(" ") }}
