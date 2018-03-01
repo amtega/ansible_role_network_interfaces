@@ -5,7 +5,6 @@ DEVICE={{ device.logicalname }}.{{ device.vlanid }}
 NAME="{{ device.logicalname }}.{{ device.vlanid }}"
 TYPE=Ethernet
 ONBOOT=yes
-NM_CONTROLLED=no
 BOOTPROTO=static
 HWADDR={{ device.macaddress }}
 {% for ip in device.ipv4 %}
