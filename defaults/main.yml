@@ -34,7 +34,7 @@ nics:
   - logicalname: service-01
     macaddress: "{{ maclist[0] | default('00:00:00:00:00:00') }}"
     ipv4:
-      - ipaddr: 10.0.2.10
+      - ipaddr: 10.0.2.7
         cidr: 24
       - ipaddr: 10.0.2.50
         cidr: 24

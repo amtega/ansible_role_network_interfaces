@@ -6,7 +6,6 @@
     state: stopped
   when: ansible_distribution_version | version_compare('7', '>=')
 
-
 - name: Enabled network service
   service:
     name: network
