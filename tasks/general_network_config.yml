@@ -2,6 +2,9 @@
 - name: Install 802.1q kernel module
   shell: modprobe -i 8021q
 
+- name: Install bonding kernel module
+  shell: modprobe -i bonding
+
 - name: Remove old icfg-interface config config files
   file:
     path: "{{ network_scripts_path }}/ifcfg-{{ item }}"
