@@ -5,6 +5,36 @@
 - name: Install bonding kernel module
   shell: modprobe -i bonding
 
+- name: Disable ipv6
+  sysctl:
+    name: "{{ item }}"
+    value: 1
+    state: present
+  with_items:
+    - net.ipv6.conf.all.disable_ipv6
+    - net.ipv6.conf.default.disable_ipv6
+
+- name: Remove ipv6 localhost from /etc/hosts
+  lineinfile:
+    dest: /etc/hosts
+    regexp: '^\:\:1'
+    state: absent
+
+- name: Prevent udp rpcbind for ipv6
+  lineinfile:
+    dest: /etc/netconfig
+    regexp: '^udp6'
+    replace: '#udp6'
+
+- name: Prevent tcp rpcbind for ipv6
+  lineinfile:
+    dest: /etc/netconfig
+    regexp: '^tcp6'
+    replace: '#tcp6'
+
+- name: Reload sysctl with ipv6 disabled
+  shell: sysctl -p
+
 - name: Remove old icfg-interface config config files
   file:
     path: "{{ network_scripts_path }}/ifcfg-{{ item }}"
