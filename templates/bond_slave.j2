@@ -1,0 +1,7 @@
+DEVICE={{ item.logicalname }}
+ONBOOT=yes
+BOOTPROTO=none
+HWADDR={{ item.macaddress }}
+NM_CONTROLLED=no
+MASTER= {{ item.bondmaster }}
+SLAVE=yes
