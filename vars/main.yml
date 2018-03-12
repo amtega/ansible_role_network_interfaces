@@ -6,15 +6,11 @@ maclist: "{{ ansible_interfaces| difference(['lo']) |
              list }}"
 
 udev_persistent_net_rules_path : /etc/udev/rules.d
-#udev_persistent_net_rules_path : /home/jmouron
 
 network_scripts_path: /etc/sysconfig/network-scripts
-#network_scripts_path: /home/jmouron
 
 dns_config_file_path: /etc/resolv.conf
-#dns_config_file_path: /home/jmouron/resolv.conf
 
 sysconfig_network_file_path: /etc/sysconfig/network
-#sysconfig_network_file_path: /home/jmouron/network
 
 mod_bonding_configuration_file: /etc/modprobe.d/bonding.conf
