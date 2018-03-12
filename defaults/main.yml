@@ -16,6 +16,12 @@ dns_options:
   - timeout:1
   - rotate
 
+bonding_options:
+  - mode=balance-tlb
+  - miimon=100
+  - downdelay=200
+  - updelay=200
+
 # NICs configuration variable
 #
 # Every nic is defined by a list of attributes. Since config files will be created
@@ -23,13 +29,16 @@ dns_options:
 ######
 # List of attributes
 ######
-# logicalname:     // Required
-# macaddress:      // Required
-# ipv4:            // List of ip and cidr mask. Required
-# mtu:             // Required
-# route:           // List of netmask and gateway. Only defined if needed
-# route_multicast: // Boolean. Only defined if needed
-# vlanid:          //  Only defined if needed
+# logicalname:     // Device name
+# macaddress:      // MAC
+# ipv4:            // List of ip and cidr mask.
+# mtu:             // Default: 1500
+# route:           // List of netmask and gateway.
+# route_multicast: // Boolean.
+# vlanid:          // Vlan id
+# bond:            // Boolean.
+# bondmaster:      // Device name of bond master
+
 nics:
   - logicalname: service-01
     macaddress: "{{ maclist[0] | default('00:00:00:00:00:00') }}"
