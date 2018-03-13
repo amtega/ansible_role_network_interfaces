@@ -21,13 +21,13 @@
     state: absent
 
 - name: Prevent udp rpcbind for ipv6
-  lineinfile:
+  replace:
     dest: /etc/netconfig
     regexp: '^udp6'
     replace: '#udp6'
 
 - name: Prevent tcp rpcbind for ipv6
-  lineinfile:
+  replace:
     dest: /etc/netconfig
     regexp: '^tcp6'
     replace: '#tcp6'
