@@ -2,7 +2,7 @@
 # Role tasks
 - name: Disable NetworkManager
   include_tasks: disable_NetworkManager.yml
-  
+
 - name: Configure general network and dns search parameters
   include_tasks: general_network_config.yml
 
