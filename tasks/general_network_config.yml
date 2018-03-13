@@ -1,15 +1,20 @@
 ---
 - name: Install 802.1q kernel module
-  shell: modprobe -i 8021q
+  modprobe:
+    name: 8021q
+    state: present
 
 - name: Install bonding kernel module
-  shell: modprobe -i bonding
+  modprobe:
+    name: bonding
+    state: present
 
 - name: Disable ipv6
   sysctl:
     name: "{{ item }}"
     value: 1
     state: present
+    reload: yes
   with_items:
     - net.ipv6.conf.all.disable_ipv6
     - net.ipv6.conf.default.disable_ipv6
@@ -22,18 +27,15 @@
 
 - name: Prevent udp rpcbind for ipv6
   replace:
-    dest: /etc/netconfig
+    path: /etc/netconfig
     regexp: '^udp6'
     replace: '#udp6'
 
 - name: Prevent tcp rpcbind for ipv6
   replace:
-    dest: /etc/netconfig
+    path: /etc/netconfig
     regexp: '^tcp6'
     replace: '#tcp6'
-
-- name: Reload sysctl with ipv6 disabled
-  shell: sysctl -p
 
 - name: Remove old icfg-interface config config files
   file:
