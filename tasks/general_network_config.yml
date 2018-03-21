@@ -37,11 +37,18 @@
     regexp: '^tcp6'
     replace: '#tcp6'
 
+- name: Icorpore vlan interfaces to definitive interfaces list
+  set_fact:
+    definitive_interfaces: "{{ definitiveinterfaces + |
+                               [ item.logicalname ~ item.vlanid ] }}"
+  with_items: nics
+  when: item.vlanid is defined
+
 - name: Remove old icfg-interface config config files
   file:
     path: "{{ network_scripts_path }}/ifcfg-{{ item }}"
     state: absent
-  with_items: "{{ ansible_interfaces| difference(['lo']) }}"
+  with_items: "{{ ansible_interfaces| difference(definitive_interfaces) }}"
 
 - name: Create dns configuration file
   template:
