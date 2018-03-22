@@ -36,9 +36,8 @@
 
 - name: Icorpore vlan interfaces to definitive interfaces list
   set_fact:
-    definitive_interfaces: "{{ definitiveinterfaces + |
-                               [ item.logicalname ~ item.vlanid ] }}"
-  with_items: nics
+    definitive_interfaces: "{{ definitive_interfaces + [ item.logicalname ~ '.' ~ item.vlanid ] }}"
+  with_items: "{{ nics }}"
   when: item.vlanid is defined
 
 - name: Remove old icfg-interface config config files
