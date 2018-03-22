@@ -26,6 +26,7 @@ bonding_options:
 #
 # Every nic is defined by a list of attributes. Since config files will be created
 # controlling if attribute is defined, only definied if needed
+# Defined per host in inventory
 ######
 # List of attributes
 ######
@@ -39,45 +40,4 @@ bonding_options:
 # bond:            // Boolean.
 # bondmaster:      // Device name of bond master
 
-nics:
-  - logicalname: service-01
-    macaddress: "{{ maclist[0] | default('00:00:00:00:00:00') }}"
-    ipv4:
-      - ipaddr: 10.0.2.7
-        cidr: 24
-      - ipaddr: 10.0.2.50
-        cidr: 24
-    mtu: 1500
-    route_multicast: yes
-
-  - logicalname: management-01
-    macaddress: "{{ maclist[1] | default('00:00:00:00:00:01') }}"
-    ipv4:
-      - ipaddr: 10.0.2.11
-        cidr: 24
-    mtu: 1500
-    route:
-      - netmask: 69.0.2.0/24
-        gateway: 10.0.2.2
-
-  - logicalname: backup-01
-    macaddress: "{{ maclist[2] | default('00:00:00:00:00:02') }}"
-    ipv4:
-      - ipaddr: 10.0.2.12
-        cidr: 24
-    mtu: 9000
-    vlanid: 101
-
-  - logicalname: monitor-01
-    macaddress: "{{ maclist[3] | default('00:00:00:00:00:03')}}"
-    ipv4:
-      - ipaddr: 10.0.2.13
-        cidr: 24
-    mtu: 1500
-
-#  - logicalname: nas-01
-#    macaddress: "{{ maclist[4] | default('00:00:00:00:00:04') }}"
-#    ipv4:
-#      - ipaddr: 10.0.2.14
-#        cidr: 24
-#    mtu: 9000
+nics: []

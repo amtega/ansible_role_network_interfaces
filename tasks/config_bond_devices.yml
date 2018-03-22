@@ -28,3 +28,4 @@
   when:
     - item.bond is defined
     - item.bondmaster is not defined
+  notify: Load bonding module

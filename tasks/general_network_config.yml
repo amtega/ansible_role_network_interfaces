@@ -4,11 +4,6 @@
     name: 8021q
     state: present
 
-- name: Install bonding kernel module
-  modprobe:
-    name: bonding
-    state: present
-
 - name: Disable ipv6
   sysctl:
     name: "{{ item }}"
@@ -30,12 +25,14 @@
     path: /etc/netconfig
     regexp: '^udp6'
     replace: '#udp6'
+  when: ansible_distribution_major_version == "6"
 
 - name: Prevent tcp rpcbind for ipv6
   replace:
     path: /etc/netconfig
     regexp: '^tcp6'
     replace: '#tcp6'
+  when: ansible_distribution_major_version == "6"
 
 - name: Icorpore vlan interfaces to definitive interfaces list
   set_fact:
@@ -49,6 +46,7 @@
     path: "{{ network_scripts_path }}/ifcfg-{{ item }}"
     state: absent
   with_items: "{{ ansible_interfaces| difference(definitive_interfaces) }}"
+  when: ansible_interfaces|difference(definitive_interfaces)|length > 0
 
 - name: Create dns configuration file
   template:

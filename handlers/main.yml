@@ -1,2 +1,6 @@
 ---
 # Role handlers
+- name: Load bonding module
+  modprobe:
+    name: bonding
+    state: present

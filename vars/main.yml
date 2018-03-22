@@ -1,9 +1,5 @@
 ---
 # Role variables
-maclist: "{{ ansible_interfaces| difference(['lo']) |
-             map('regex_replace', '^(.*)$', 'ansible_\\1' ) |
-             map('extract', hostvars[inventory_hostname], 'macaddress')  |
-             list }}"
 
 definitive_interfaces: "{{ nics | map(attribute='logicalname') |
                            list | union(['lo']) }}"
