@@ -1,9 +1,9 @@
 ---
 nics:
   - logicalname: service-01
-    macaddress: 08:00:27:3d:2d:5e
+    macaddress: 08:00:27:3c:fb:e0
     ipv4:
-      - ipaddr: 10.0.2.18
+      - ipaddr: 10.0.2.20
         cidr: 24
       - ipaddr: 10.0.2.51
         cidr: 24
@@ -11,9 +11,9 @@ nics:
     route_multicast: yes
 
   - logicalname: management-01
-    macaddress: 08:00:27:53:7e:fc
+    macaddress: 08:00:27:06:c1:f8
     ipv4:
-      - ipaddr: 10.0.2.19
+      - ipaddr: 10.0.2.21
         cidr: 24
     mtu: 1500
     route:
@@ -21,16 +21,16 @@ nics:
         gateway: 10.0.2.2
 
   - logicalname: backup-01
-    macaddress: 08:00:27:58:74:d4
+    macaddress: 08:00:27:53:c7:22
     ipv4:
-      - ipaddr: 10.0.2.20
+      - ipaddr: 10.0.2.22
         cidr: 24
     mtu: 9000
     vlanid: 101
 
   - logicalname: monitor-01
-    macaddress: 08:00:27:a1:38:82
+    macaddress: 08:00:27:46:f9:08
     ipv4:
-      - ipaddr: 10.0.2.21
+      - ipaddr: 10.0.2.23
         cidr: 24
     mtu: 1500
