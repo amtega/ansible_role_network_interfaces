@@ -1,5 +1,4 @@
 ---
-<<<<<<< tests/main.yml
 # Tasks for testing role
 - name: Temporal test for templates in localhost
   hosts: CentOS
@@ -7,6 +6,3 @@
     - amtega.network_interfaces
   tags:
     - idempotence
-=======
-# Tasks for testing role
->>>>>>> tests/main.yml
