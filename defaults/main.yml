@@ -1,2 +1,43 @@
 ---
 # Role default lower priority variables
+# Network general parameters
+hostname: "{{ ansible_hostname }}"
+gateway: 10.0.2.1
+
+# DNS resolv file variables
+dns_domain: acme.com
+dns_search:
+  - acme.com
+  - xunta.es
+dns_nameserver:
+  - 10.180.188.32
+  - 8.8.8.8
+dns_options:
+  - timeout:1
+  - rotate
+
+bonding_options:
+  - mode=balance-tlb
+  - miimon=100
+  - downdelay=200
+  - updelay=200
+
+# NICs configuration variable
+#
+# Every nic is defined by a list of attributes. Since config files will be created
+# controlling if attribute is defined, only definied if needed
+# Defined per host in inventory
+######
+# List of attributes
+######
+# logicalname:     // Device name
+# macaddress:      // MAC
+# ipv4:            // List of ip and cidr mask.
+# mtu:             // Default: 1500
+# route:           // List of netmask and gateway.
+# route_multicast: // Boolean.
+# vlanid:          // Vlan id
+# bond:            // Boolean.
+# bondmaster:      // Device name of bond master
+
+nics: []

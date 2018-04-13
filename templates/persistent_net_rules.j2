@@ -1,0 +1,6 @@
+{{ ansible_managed | comment }}
+{% for nic in nics %}
+{% if nic.macaddress is defined %}
+SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="{{ nic.macaddress }}", ATTR{dev_id}=="0x0", ATTR{type}=="1", KERNEL=="eth*", NAME="{{ nic.logicalname }}"
+{% endif %}
+{% endfor %}

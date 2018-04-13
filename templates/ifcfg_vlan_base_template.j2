@@ -1,0 +1,8 @@
+{{ ansible_managed | comment }}
+
+DEVICE={{ item.logicalname }}
+TYPE=Ethernet
+BOOTPROTO=none
+ONBOOT=yes
+MTU={{ item.mtu }}
+NM_CONTROLLED=no

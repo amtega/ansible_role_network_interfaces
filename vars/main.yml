@@ -1,2 +1,15 @@
 ---
 # Role variables
+
+definitive_interfaces: "{{ nics | map(attribute='logicalname') |
+                           list | union(['lo']) }}"
+
+udev_persistent_net_rules_path : /etc/udev/rules.d
+
+network_scripts_path: /etc/sysconfig/network-scripts
+
+dns_config_file_path: /etc/resolv.conf
+
+sysconfig_network_file_path: /etc/sysconfig/network
+
+mod_bonding_configuration_file: /etc/modprobe.d/bonding.conf

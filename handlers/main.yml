@@ -1,2 +1,10 @@
 ---
 # Role handlers
+- name: Load bonding module
+  modprobe:
+    name: bonding
+    state: present
+
+- name: Deactivate biosdevname for CentOS / RHEL 7
+  shell: grubby --update-kernel=ALL --args="net.ifnames=0 biosdevname=0"
+  when: ansible_distribution_version | version_compare('7', '>=')
