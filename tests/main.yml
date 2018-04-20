@@ -1,6 +1,6 @@
 ---
 # Tasks for testing role
-- name: Temporal test for templates in localhost
+- name: temporal test for templates in localhost
   hosts: CentOS
   roles:
     - amtega.network_interfaces
