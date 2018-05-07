@@ -1,6 +1,6 @@
 
 
-- name: Create a ifcfg config file for every slave interface for bond
+- name: create a ifcfg config file for every slave interface for bond
   template:
     src: bond_slave.j2
     dest: "{{ network_scripts_path }}/ifcfg-{{ item.logicalname }}"
@@ -9,7 +9,7 @@
     - item.bond is defined
     - item.bondmaster is defined
 
-- name: Create a ifcfg config file for every interface vith bond defined
+- name: create a ifcfg config file for every interface vith bond defined
   template:
     src: bond_master.j2
     dest: "{{ network_scripts_path }}/ifcfg-{{ device.logicalname }}"
@@ -20,7 +20,7 @@
   loop_control:
     loop_var: device
 
-- name: Create configuration file for bonding module
+- name: create configuration file for bonding module
   template:
     src: bond_config.j2
     dest: "{{ mod_bonding_configuration_file }}"
@@ -28,4 +28,4 @@
   when:
     - item.bond is defined
     - item.bondmaster is not defined
-  notify: Load bonding module
+  notify: load bonding module

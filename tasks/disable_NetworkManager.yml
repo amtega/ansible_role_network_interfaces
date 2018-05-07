@@ -1,12 +1,12 @@
 ---
-- name: Remove NetworkManager package
+- name: remove NetworkManager package
   package:
     name: NetworkManager
     state: absent
   when: ansible_distribution_version | version_compare('7', '>=')
-  notify: Deactivate biosdevname for CentOS / RHEL 7
+  notify: deactivate biosdevname for CentOS / RHEL 7
 
-- name: Enabled network service
+- name: enabled network service
   service:
     name: network
     enabled: yes

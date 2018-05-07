@@ -1,4 +1,4 @@
-- name: Create a route config file per device if is needed
+- name: create a route config file per device if is needed
   template:
     src: route.j2
     dest: "{{ network_scripts_path }}/route-{{ device.logicalname }}"
@@ -7,7 +7,7 @@
   loop_control:
     loop_var: device
 
-- name: Create a route config file for multicast per device if is needed
+- name: create a route config file for multicast per device if is needed
   template:
     src: route_multicast.j2
     dest: "{{ network_scripts_path }}/route-{{ item.logicalname }}"
