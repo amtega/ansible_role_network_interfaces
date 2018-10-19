@@ -1,4 +1,5 @@
 galaxy_info:
+  role_name: network_interfaces
   author: José Enrique Mourón Regueira
   description: Configure a ipv4 network interfaces
   company: AMTEGA - Xunta de Galicia
