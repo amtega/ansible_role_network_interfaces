@@ -2,7 +2,7 @@
 # Role tasks
 - block:
     - import_tasks: check.yml
-    - import_tasks: disable_packages.yml
+    - import_tasks: manage_packages.yml
     - import_tasks: general_network_config.yml
     - import_tasks: config_udev.yml
     - import_tasks: config_ifcfg_files.yml
