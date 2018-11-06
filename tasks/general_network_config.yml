@@ -56,3 +56,9 @@
   template:
     src: sysconfig_network_template.j2
     dest: "{{ sysconfig_network_file_path }}"
+
+- name: enabled network service
+  service:
+    name: network
+    enabled: yes
+    state: started

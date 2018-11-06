@@ -1,19 +1,12 @@
 ---
 # Role tasks
-- name: disable NetworkManager
-  include_tasks: disable_NetworkManager.yml
-
-- name: configure general network and dns search parameters
-  include_tasks: general_network_config.yml
-
-- name: configure persistent net names in udev
-  include_tasks: config_udev.yml
-
-- name: create ifcfg files for nic devices
-  include_tasks: config_ifcfg_files.yml
-
-- name: create route files for nic devices if needed
-  include_tasks: config_route_files.yml
-
-- name: restart network services
-  include_tasks: restart_net.yml
+- block:
+    - import_tasks: check.yml
+    - import_tasks: disable_packages.yml
+    - import_tasks: general_network_config.yml
+    - import_tasks: config_udev.yml
+    - import_tasks: config_ifcfg_files.yml
+    - import_tasks: config_route_files.yml
+    - import_tasks: restart_net.yml
+  tags:
+    - role::network_interfaces

@@ -5,7 +5,9 @@
     src: ifcfg_template.j2
     dest: "{{ network_scripts_path }}/ifcfg-{{ device.logicalname }}"
   with_items: "{{ nics }}"
-  when: device.vlanid is undefined
+  when:
+    - device.vlanid is undefined
+    - item.bond is not defined
   loop_control:
     loop_var: device
 
@@ -14,13 +16,16 @@
     src: ifcfg_vlan_base_template.j2
     dest: "{{ network_scripts_path }}/ifcfg-{{ item.logicalname }}"
   with_items: "{{ nics }}"
-  when: item.vlanid is defined
-
+  when:
+    - item.vlanid is defined
+    - item.bond is not defined
 - name: create a ifcfg config file for every interface vith vlanid
   template:
     src: ifcfg_vlan_template.j2
     dest: "{{ network_scripts_path }}/ifcfg-{{ device.logicalname }}.{{ device.vlanid }}"
   with_items: "{{ nics }}"
-  when: device.vlanid is defined
+  when:
+    - device.vlanid is defined
+    - item.bond is not defined
   loop_control:
     loop_var: device
