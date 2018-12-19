@@ -8,6 +8,9 @@
       when:
         - item.bond is defined
         - item.bondmaster is defined
+      notify:
+        - reboot host
+        - wait host
 
     - name: create a ifcfg config file for every interface vith bond defined
       template:
@@ -19,6 +22,9 @@
         - device.bondmaster is not defined
       loop_control:
         loop_var: device
+      notify:
+        - reboot host
+        - wait host
 
     - name: create configuration file for bonding module
       template:

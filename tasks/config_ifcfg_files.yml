@@ -10,6 +10,9 @@
         - item.bond is not defined
       loop_control:
         loop_var: device
+      notify:
+        - reboot host
+        - wait host
 
     - name: create a ifcfg config file for every base device for vlan tagged interfaces
       template:
@@ -19,6 +22,10 @@
       when:
         - item.vlanid is defined
         - item.bond is not defined
+      notify:
+        - reboot host
+        - wait host
+
     - name: create a ifcfg config file for every interface vith vlanid
       template:
         src: ifcfg_vlan_template.j2
@@ -29,6 +36,9 @@
         - item.bond is not defined
       loop_control:
         loop_var: device
+      notify:
+        - reboot host
+        - wait host
   tags:
     - role::network_interfaces
     - role::network_interfaces::ifcfg

@@ -1,7 +1,6 @@
 ---
 # Role tasks
 - block:
-    - import_tasks: check.yml
     - import_tasks: manage_packages.yml
     - import_tasks: general_network_config.yml
     - import_tasks: config_udev.yml

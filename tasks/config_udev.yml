@@ -1,8 +1,12 @@
+---
 - block:
     - name: create persistent net rules
       template:
         src: persistent_net_rules.j2
         dest: "{{ udev_persistent_net_rules_path }}/70-persistent-net.rules"
+      notify:
+        - reboot host
+        - wait host
   tags:
     - role::network_interfaces
     - role::network_interfaces::config_udev
