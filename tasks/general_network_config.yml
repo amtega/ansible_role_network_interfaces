@@ -1,5 +1,10 @@
 ---
 - block:
+    - name: create array with a list of prefetch mac address by ip address
+      set_fact:
+        extract_mac_by_ip: >-
+          {{ lookup('template', 'prefecth_mac_list') | from_yaml }}
+           
     - name: install 802.1q kernel module
       modprobe:
         name: 8021q

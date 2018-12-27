@@ -6,7 +6,7 @@ TYPE=Ethernet
 ONBOOT=yes
 NM_CONTROLLED=no
 BOOTPROTO=static
-HWADDR={{ device.macaddress }}
+HWADDR={{ device.macaddress | default( {{ extract_mac_by_ip[ nic.ipv4[1].ipaddr ] }} ) }}
 {% for ip in device.ipv4 %}
 {% if loop.index == 1 %}
 IPADDR={{ ip.ipaddr }}
