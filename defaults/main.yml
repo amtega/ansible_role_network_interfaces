@@ -27,6 +27,7 @@ bonding_options:
 # Every nic is defined by a list of attributes. Since config files will be created
 # controlling if attribute is defined, only definied if needed
 # Defined per host in inventory
+# Macaddress atribute is needed, but we made a prefecth for ip by default if dont provide 
 ######
 # List of attributes
 ######

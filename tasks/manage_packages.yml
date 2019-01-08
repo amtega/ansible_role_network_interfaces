@@ -1,0 +1,22 @@
+---
+
+- block:
+    - name: remove unused operating system packages
+      package:
+        name: "{{ item }}"
+        state: absent
+      loop: "{{ network_interfaces_unused_os_packages[distro_packages_key] }}"
+    - name: install required operating system packages
+      package:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ network_interfaces_os_packages[distro_packages_key] }}"
+  environment: "{{ network_interfaces_http_proxy_environment }}"
+  vars:
+    distro_packages_key: >-
+      {{ ansible_facts.distribution
+         | lower
+         + "_" + ansible_facts.distribution_major_version }}
+  tags:
+    - role::network_interfaces
+    - role::network_interfaces::install

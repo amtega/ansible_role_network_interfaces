@@ -4,5 +4,3 @@
   hosts: CentOS
   roles:
     - amtega.network_interfaces
-  tags:
-    - idempotence

@@ -1,0 +1,7 @@
+{% for iface in ansible_interfaces %}
+{% if  hostvars[inventory_hostname]['ansible_%s'|format(iface)]['ipv4']['address'] is defined
+       and hostvars[inventory_hostname]['ansible_%s'|format(iface)]['macaddress'] is defined %}
+- {{ hostvars[inventory_hostname]['ansible_%s'|format(iface)]['ipv4']['address'] }}: {{ hostvars[inventory_hostname]['ansible_%s'|format(iface)]['macaddress'] }}
+{% endif %}
+
+{% endfor %}
