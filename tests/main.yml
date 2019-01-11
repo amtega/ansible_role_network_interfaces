@@ -4,6 +4,7 @@
 - name: configure vagrant sandbox environment
   hosts: localhost
   roles:
+<<<<<<< HEAD
     - role: amtega.vagrant_presets
       vagrant_presets_boxes_json_query: >-
         [? starts_with(name, `centos-6`)
@@ -49,3 +50,6 @@
 #       vagrant_sandbox_state: absent
 #   tags:
 #     - sandbox
+=======
+    - amtega.network_interfaces
+>>>>>>> master

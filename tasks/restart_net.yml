@@ -1,6 +1,5 @@
 ---
-#- name: restart network service
-#  service:
-#    name: network
-#    enabled: yes
-#    state: restarted
+- meta: flush_handlers
+  tags:
+    - role::network_interfaces
+    - role::network_interfaces::restart_net
