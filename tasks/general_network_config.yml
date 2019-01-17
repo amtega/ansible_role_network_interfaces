@@ -3,8 +3,7 @@
     - name: create array with a list of prefetch mac address by ip address
       set_fact:
         extract_mac_by_ip: >-
-          {{ lookup('template', 'prefecth_mac_list') | from_yaml }}
-           
+          {{ lookup('template', 'prefetch_mac_list.j2') | from_yaml }}
     - name: install 802.1q kernel module
       modprobe:
         name: 8021q
@@ -31,16 +30,16 @@
         path: /etc/netconfig
         regexp: '^udp6'
         replace: '#udp6'
-      when: ansible_distribution_major_version == "6"
+      when: ansible_facts.distribution_major_version == "6"
 
     - name: prevent tcp rpcbind for ipv6
       replace:
         path: /etc/netconfig
         regexp: '^tcp6'
         replace: '#tcp6'
-      when: ansible_distribution_major_version == "6"
+      when: ansible_facts.distribution_major_version == "6"
 
-    - name: icorpore vlan interfaces to definitive interfaces list
+    - name: incorpore vlan interfaces to definitive interfaces list
       set_fact:
         definitive_interfaces: "{{ definitive_interfaces + [ item.logicalname ~ '.' ~ item.vlanid ] }}"
       with_items: "{{ nics }}"
@@ -50,8 +49,8 @@
       file:
         path: "{{ network_scripts_path }}/ifcfg-{{ item }}"
         state: absent
-      with_items: "{{ ansible_interfaces| difference(definitive_interfaces) }}"
-      when: ansible_interfaces|difference(definitive_interfaces)|length > 0
+      with_items: "{{ ansible_facts.interfaces| difference(definitive_interfaces) }}"
+      when: ansible_facts.interfaces|difference(definitive_interfaces)|length > 0
 
     - name: create dns configuration file
       template:

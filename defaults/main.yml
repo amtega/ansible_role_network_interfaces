@@ -1,7 +1,7 @@
 ---
 # Role default lower priority variables
 # Network general parameters
-hostname: "{{ ansible_hostname }}"
+hostname: "{{ ansible_facts.hostname }}"
 gateway: 10.0.2.1
 
 # DNS resolv file variables
@@ -27,7 +27,7 @@ bonding_options:
 # Every nic is defined by a list of attributes. Since config files will be created
 # controlling if attribute is defined, only definied if needed
 # Defined per host in inventory
-# Macaddress atribute is needed, but we made a prefecth for ip by default if dont provide 
+# Macaddress atribute is needed, but we made a prefecth for ip by default if dont provide
 ######
 # List of attributes
 ######
