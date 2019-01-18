@@ -1,0 +1,20 @@
+{{ ansible_managed | comment }}
+
+VLAN=yes
+interface={{ interface.logicalname }}.{{ interface.vlanid }}
+NAME="{{ interface.logicalname }}.{{ interface.vlanid }}"
+TYPE=Ethernet
+ONBOOT=yes
+BOOTPROTO=static
+HWADDR={{ interface.macaddress | default(network_interfaces_ip_mac_map[interface.ipv4.0.address]) }}
+{% for ip in interface.ipv4 %}
+{% if loop.index == 1 %}
+IPADDR={{ ip.address }}
+PREFIX={{ ip.cidr }}
+{% else %}
+IPADDR{{ loop.index }}={{ ip.address }}
+PREFIX{{ loop.index }}={{ ip.cidr }}
+{% endif %}
+{% endfor %}
+IPV4_FAILURE_FATAL=yes
+IPV6INIT=no

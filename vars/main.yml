@@ -1,75 +1,15 @@
 ---
 # Role variables
 
-# Supported distributions
+# Paths
 
-network_interfaces_supported_distributions:
-  - centos
-  - fedora
-  - rhel
+network_devices_udev_persistent_rules_path: >-
+  /etc/udev/rules.d/70-persistent-net.rules
 
-# Supported distributions versions
+network_devices_scripts_dir: /etc/sysconfig/network-scripts
 
-network_interfaces_supported_versions:
-  centos: 6
-  fedora: 27
-  rhel: 6
-# Operating system packages to install/uninstall
+network_devices_resolv_config_path: /etc/resolv.conf
 
-network_interfaces_os_packages:
-  centos_6: []
+network_devices_network_config_path: /etc/sysconfig/network
 
-  centos_7: []
-
-  fedora_27: []
-
-  fedora_28: []
-
-  rhel_6: []
-
-  rhel_7: []
-
-network_interfaces_unused_os_packages:
-  centos_6: []
-
-  centos_7:
-    - NetworkManager
-
-  fedora_27:
-    - NetworkManager
-
-  fedora_28:
-    - NetworkManager
-
-  rhel_6: []
-
-  rhel_7:
-    - NetworkManager
-
-# General variables for network configuration
-
-definitive_interfaces: "{{ nics | map(attribute='logicalname') |
-                           list | union(['lo']) }}"
-
-udev_persistent_net_rules_path : /etc/udev/rules.d
-
-network_scripts_path: /etc/sysconfig/network-scripts
-
-dns_config_file_path: /etc/resolv.conf
-
-sysconfig_network_file_path: /etc/sysconfig/network
-
-mod_bonding_configuration_file: /etc/modprobe.d/bonding.conf
-
-# Proxy environment settings
-
-network_interfaces_http_proxy_config:
-    http_proxy: "{{ iptables_http_proxy | default('') }}"
-    https_proxy: "{{ iptables_https_proxy | default('') }}"
-    http_no_proxy: "{{ iptables_no_proxy | default('') }}"
-
-network_interfaces_http_proxy_environment: >-
-  {{ (iptables_http_proxy is defined
-      or iptables_https_proxy is defined
-      or iptables_no_proxy is defined)
-     | ternary(iptables_http_proxy_config, {}) }}
+network_devices_bonding_config_path: /etc/modprobe.d/bonding.conf

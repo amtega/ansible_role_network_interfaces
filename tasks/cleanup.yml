@@ -1,0 +1,16 @@
+---
+# Cleanup old config files
+
+- name: remove old interface config files
+  file:
+    path: "{{ network_interfaces_config_file }}"
+    state: absent
+  loop: "{{ lookup('template', 'files_to_clean.yml.j2') | from_yaml }}"
+  loop_control:
+    loop_var: network_interfaces_config_file
+  notify:
+    - reboot host
+    - wait host
+  tags:
+    - role::network_interfaces
+    - role::network_interfaces::cleanup

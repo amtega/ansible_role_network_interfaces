@@ -1,7 +1,9 @@
-DEVICE={{ item.logicalname }}
+{{ ansible_managed | comment }}
+
+DEVICE={{ interface.logicalname }}
 ONBOOT=yes
 BOOTPROTO=none
-HWADDR={{ item.macaddress }}
+HWADDR={{ interface.macaddress }}
 NM_CONTROLLED=no
-MASTER= {{ item.bondmaster }}
+MASTER= {{ interface.bond_master }}
 SLAVE=yes

@@ -1,44 +1,53 @@
 ---
 # Role default lower priority variables
 
+# General network config
+
 network_interfaces_hostname: "{{ inventory_hostname }}"
 network_interfaces_gateway: "{{ ansible_facts.default_ipv4.gateway }}"
+network_interfaces_ipv6: no
 
-# DNS resolv file variables
-dns_domain: acme.com
-dns_search:
-  - acme.com
-  - xunta.es
-dns_nameserver:
-  - 10.180.188.32
-  - 8.8.8.8
-dns_options:
-  - timeout:1
-  - rotate
+# DNS config
 
-bonding_options:
-  - mode=balance-tlb
-  - miimon=100
-  - downdelay=200
-  - updelay=200
+network_interfaces_dns_domain: acme.com
+network_interfaces_dns_search: []
+network_interfaces_dns_nameserver: []
+network_interfaces_dns_options: []
 
-# NICs configuration variable
+# List of dicts with the network interfaces to configure. The dicts must have
+# the following structure:
 #
-# Every nic is defined by a list of attributes. Since config files will be created
-# controlling if attribute is defined, only definied if needed
-# Defined per host in inventory
-# Macaddress atribute is needed, but we made a prefecth for ip by default if dont provide
-######
-# List of attributes
-######
-# logicalname:     // Device name
-# macaddress:      // MAC
-# ipv4:            // List of ip and cidr mask.
-# mtu:             // Default: 1500
-# route:           // List of netmask and network_interfaces_gateway.
-# route_multicast: // Boolean.
-# vlanid:          // Vlan id
-# bond:            // Boolean.
-# bondmaster:      // Device name of bond master
+# {
+#   logicalname: <name>       # Name for the interface in the operating system
+#   macaddress: <mac>         # MAC address of the device to bind
+#   ipv4:                     # List of dicts with the ip addresses to assign
+#     - address: <ip>         # IP address
+#       cidr: <cidr>          # Network mask in CIDR format
+#   mtu:                      # MTU (default is 1500)
+#   routes:                   # List of dicts to the routes to setup
+#      - net: <net>           # Net to route in the format net_address/cidr
+#        gateway: <gateway>   # Gateway to use
+#   route_multicast: <yes_no> # Route or not the multicast traffic
+#   vlanid: <id>              # VlAN id of the device
+#   bond_master: <name>       # logical name of the master interface for bonding
+#   bond_options:             # List of strings with options for bonding
+# }
+#
+# Sample:
+#
+# {
+#   logicalname: management-01
+#    macaddress: 08:00:27:06:c1:f8
+#    ipv4:
+#      - address: 10.0.2.21
+#        cidr: 24
+#    mtu: 1500
+#    route:
+#      - net: 69.0.2.0/24
+#        gateway: 10.0.2.2
+#    route_multicast: no
+#    vlanid: 1024
+#    bond: no
+# }
 
-nics: []
+network_interfaces: []

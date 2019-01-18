@@ -1,16 +1,19 @@
 ---
 # Role tasks
+
 - block:
-    - import_tasks: manage_packages.yml
-    - import_tasks: general_network_config.yml
-
-    - include_tasks: kernel_modules.yml
-
-    - import_tasks: config_udev.yml
-    - import_tasks: config_ifcfg_files.yml
-    - import_tasks: config_route_files.yml
-    - import_tasks: restart_net.yml
-
-
+    - include_tasks: facts.yml
+    - include_tasks: cleanup.yml
+    - include_tasks: disable_ipv6.yml
+    - include_tasks: sysconfig.yml
+    - include_tasks: hostname.yml
+    - include_tasks: dns.yml
+    - include_tasks: kernel.yml
+    - include_tasks: udev.yml
+    - include_tasks: ifcfg.yml
+    - include_tasks: bonding.yml
+    - include_tasks: routes.yml
+    - include_tasks: service.yml
+    - include_tasks: reboot.yml
   tags:
     - role::network_interfaces

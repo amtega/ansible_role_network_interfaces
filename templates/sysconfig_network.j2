@@ -1,0 +1,10 @@
+{{ ansible_managed | comment }}
+
+NETWORKING=yes
+HOSTNAME={{ network_interfaces_hostname }}
+{% if network_interfaces_ipv6 %}
+IPV6_INIT=yes
+{% else %}
+IPV6_INIT=no
+{% endif %}
+gateway={{ network_interfaces_gateway }}

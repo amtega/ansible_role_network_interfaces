@@ -1,0 +1,10 @@
+---
+# Setup facts
+
+- name: setup fact with the ip/mac address mapping
+  set_fact:
+    network_interfaces_ip_mac_map: >-
+      {{ lookup('template', 'ip_mac_map.j2') | from_yaml }}
+  tags:
+    - role::network_interfaces
+    - role::network_interfaces::facts

@@ -1,0 +1,49 @@
+---
+# Bonding setup tasks
+
+- block:
+    - name: create config files for bond slave interfaces
+      template:
+        src: bond_slave.j2
+        dest: >-
+          {{ network_devices_scripts_dir }}/ifcfg-{{ interface.logicalname }}
+      loop: >-
+        {{ network_interfaces
+           | selectattr("bond_master", "defined")
+           | list }}
+      loop_control:
+        loop_var: interface
+        label: "{{ inerface.logicalname }}"
+      notify:
+        - reboot host
+        - wait host
+
+    - name: create config files for bond master interfaces
+      template:
+        src: bond_master.j2
+        dest: >-
+          {{ network_devices_scripts_dir }}/ifcfg-{{ interface.logicalname }}
+      loop: >-
+        {{ network_interfaces
+           | selectattr("bond_options", "defined")
+           | selectattr("bond_master", "undefined")
+           | list }}
+      loop_control:
+        loop_var: interface
+        label: "{{ inerface.logicalname }}"
+      notify:
+        - reboot host
+        - wait host
+
+    - name: create configuration file for bonding module
+      template:
+        src: bond_config.j2
+        dest: "{{ network_devices_bonding_config_path }}"
+      with_items: "{{ network_interfaces }}"
+      when:
+        - item.bond is defined
+        - item.bond_master is not defined
+      notify: load bonding module
+  tags:
+    - role::network_interfaces
+    - role::network_interfaces::bonding

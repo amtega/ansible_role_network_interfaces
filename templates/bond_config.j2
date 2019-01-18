@@ -1,2 +1,9 @@
-alias {{ item.logicalname }} bonding
-options {{ item.logicalname }} {{ bonding_options | join(" ") }}
+{{ ansible_managed | comment }}
+
+{% for interface in network_interfaces
+                    | selectattr("bond", "defined")
+                    | selectattr("bond_options", "defined")
+                    | list %}
+alias {{ interface.logicalname }} bonding
+options {{ interface.logicalname }} {{ bonding_options | join(" ") }}
+{% endfor %}

@@ -1,17 +1,21 @@
 {{ ansible_managed | comment }}
 
 interface={{ interface.logicalname }}
+NAME={{ interface.logicalname }}
+TYPE=Ethernet
 ONBOOT=yes
 NM_CONTROLLED=no
 BOOTPROTO=static
+HWADDR={{ interface.macaddress | default(network_interfaces_ip_mac_map[interface.ipv4.0.address]) }}
 {% for ip in interface.ipv4 %}
 {% if loop.index == 1 %}
 IPADDR={{ ip.address }}
 PREFIX={{ ip.cidr }}
 {% else %}
 IPADDR{{ loop.index }}={{ ip.address }}
-PREFIX{{ loop.index }}={{ ip.cidr  }}
+PREFIX{{ loop.index }}={{ ip.cidr }}
 {% endif %}
 {% endfor %}
+MTU={{ interface.mtu | default(1500) }}
 IPV4_FAILURE_FATAL=yes
 IPV6INIT=no

@@ -1,0 +1,26 @@
+---
+# Routes config tasks
+
+- block:
+    - name: create routes config files
+      template:
+        src: route.j2
+        dest: >-
+          {{ network_devices_scripts_dir }}/route-{{ interface.logicalname }}
+      loop: >-
+        {{ network_interfaces
+           | selectattr("routes", "defined")
+           | list
+           + network_interfaces
+             | selectattr("route_multicast", "defined")
+             | selectattr("route_multicast", "equalto", "true")
+             | list
+             | unique }}
+      loop_control:
+        loop_var: interface
+      notify:
+        - reboot host
+        - wait host
+  tags:
+    - role::network_interfaces
+    - role::network_interfaces::routes
