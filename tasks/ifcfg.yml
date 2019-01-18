@@ -1,0 +1,60 @@
+---
+- block:
+    - name: create config files for interfaces without vlan
+      template:
+        src: ifcfg.j2
+        dest: >-
+          {{ network_devices_scripts_dir }}/ifcfg-{{ interface.logicalname }}
+      loop: >-
+        {{ network_interfaces
+           | selectattr("vlanid", "undefined")
+           | selectattr("bond_master", "undefined")
+           | list }}
+      loop_control:
+        loop_var: interface
+        label: "{{ inerface.logicalname }}"
+      notify:
+        - reboot host
+        - wait host
+
+    - name: create base config files for interfaces with vlan
+      template:
+        src: ifcfg_vlan_base.j2
+        dest: >-
+          {{ network_devices_scripts_dir }}/ifcfg-{{ interface.logicalname }}
+      loop: >-
+        {{ network_interfaces
+           | selectattr("vlanid", "defined")
+           | selectattr("bond_master", "undefined")
+           | list }}
+      loop_control:
+        loop_var: interface
+        label: "{{ inerface.logicalname }}"
+      notify:
+        - reboot host
+        - wait host
+
+    - name: create config files for interfaces with vlan
+      template:
+        src: ifcfg_vlan.j2
+        dest: >-
+          {{ network_devices_scripts_dir
+             + "/"
+             + "ifcfg-"
+             + interface.logicalname
+             + "."
+             + interface.vlanid }}
+      loop: >-
+        {{ network_interfaces
+           | selectattr("vlanid", "defined")
+           | selectattr("bond_master", "undefined")
+           | list }}
+      loop_control:
+        loop_var: interface
+        label: "{{ inerface.logicalname }}"
+      notify:
+        - reboot host
+        - wait host
+  tags:
+    - role::network_interfaces
+    - role::network_interfaces::ifcfg

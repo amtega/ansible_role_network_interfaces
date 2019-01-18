@@ -1,6 +1,8 @@
 {{ ansible_managed | comment }}
-{% for nic in nics %}
-{% if nic.macaddress is defined or extract_mac_by_ip[ nic.ipv4.ipaddr ] is defined %}
-SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="{{ nic.macaddress | default( {{ extract_mac_by_ip[ nic.ipv4[1].ipaddr ] }} ) }}", ATTR{dev_id}=="0x0", ATTR{type}=="1", KERNEL=="eth*", NAME="{{ nic.logicalname }}"
+
+{% for nic in network_interfaces %}
+{% if nic.macaddress is defined
+      or network_interfaces_ip_mac_map[nic.ipv4.address] is defined %}
+SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="{{ nic.macaddress | default(network_interfaces_ip_mac_map[nic.ipv4.0.address]) }}", ATTR{dev_id}=="0x0", ATTR{type}=="1", KERNEL=="eth*", NAME="{{ nic.logicalname }}"
 {% endif %}
 {% endfor %}

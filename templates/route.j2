@@ -1,4 +1,9 @@
 {{ ansible_managed | comment }}
-{% for route in device.route %}
-{{ route.netmask }} via {{ route.gateway }}
+
+{% for route in interface.routes %}
+{{ interface.netmask }} via {{ interface.gateway }}
 {% endfor %}
+
+{% if interface.route_multicast | default(false) %}
+239.0.0.0/8 dev {{ interface.logicalname }}
+{% endif %}

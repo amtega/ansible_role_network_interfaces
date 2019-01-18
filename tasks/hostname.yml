@@ -1,0 +1,9 @@
+---
+# Hostname config tasks
+
+- name: setup hostname
+  hostname:
+    name: "{{ network_interfaces_hostname }}"
+  tags:
+    - role::network_interfaces
+    - role::network_interfaces::hostname

@@ -1,0 +1,10 @@
+---
+# Service config tasks
+
+- name: enable network service
+  service:
+    name: network
+    enabled: yes
+  tags:
+    - role::network_interfaces
+    - role::network_interfaces::service

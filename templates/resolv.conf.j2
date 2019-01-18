@@ -1,0 +1,6 @@
+domain {{ network_interfaces_dns_domain }}
+search {{ network_interfaces_dns_search | join(" ")}}
+{% for server in network_interfaces_dns_nameserver %}
+nameserver {{ server }}
+{% endfor %}
+options {{ network_interfaces_dns_options | join(" ") }}

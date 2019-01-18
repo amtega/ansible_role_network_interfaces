@@ -3,19 +3,20 @@
 
 galaxy_info:
   role_name: network_interfaces
-  author: José Enrique Mourón Regueira
-  description: Configure a ipv4 network interfaces
+  author: José Enrique Mourón Regueira / Juan Antonio Valiño García
+  description: Configure ipv4 network interfaces
   company: AMTEGA - Xunta de Galicia
-
   license: GPLv3 or EUPL
-
-  min_ansible_version: 2.4
-
+  min_ansible_version: 2.7
   platforms:
-  - name: EL
-    versions:
-      - 6
-      - 7
+    - name: EL
+      versions:
+        - 6
+        - 7
+    - name: Fedora
+      versions:
+        - 27
+        - 28
   galaxy_tags:
     - network
     - interfaces
@@ -28,8 +29,27 @@ dependencies:
       fedora: 27
       rhel: 6
 
+  - role: amtega.packages
+    packages_os:
+      all:
+        all:
+          cobbler: present
+          cobbler-web: present
+          curl: present
+          debmirror: present
+          fence-agents: present
+          httpd: present
+          pykickstart: present
+          which: present
+          wget: present
+      centos:
+        7:
+          NetworkManager: absent
+      fedora:
+        all:
+          NetworkManager: absent
+      rhel:
+        7:
+          NetworkManager: absent
+
   - role: amtega.reboot
-    
-  # List your role dependencies here, one per line.
-  # Be sure to remove the '[]' above if you add dependencies
-  # to this list.

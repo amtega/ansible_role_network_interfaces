@@ -1,0 +1,18 @@
+{% set definitive_interfaces = network_interfaces
+                               | map(attribute='logicalname')
+                               | list
+                               | union(['lo']) %}
+
+{% for interface in network_interfaces %}
+{% if interface.vlanid is defined %}
+{% set definitive_interfaces = definitive_interfaces
+                               + [ interface.logicalname ~ '.' ~ interface.vlanid ] %}
+{% endif %}
+{% endfor %}
+
+{% for interface in ansible_facts.interfaces
+                    | difference(definitive_interfaces) %}
+- {{ network_devices_scripts_dir }}/ifcfg-{{ interface }}
+{% else %}
+[]
+{% endfor %}

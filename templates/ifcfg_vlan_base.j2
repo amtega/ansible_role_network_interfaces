@@ -1,8 +1,8 @@
 {{ ansible_managed | comment }}
 
-DEVICE={{ item.logicalname }}
+DEVICE={{ interface.logicalname }}
 TYPE=Ethernet
 BOOTPROTO=none
 ONBOOT=yes
-MTU={{ item.mtu }}
+MTU={{ interface.mtu | default(1500) }}
 NM_CONTROLLED=no

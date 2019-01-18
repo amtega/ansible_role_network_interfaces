@@ -1,6 +1,55 @@
 ---
 # Tasks for testing role
-- name: temporal test for templates in localhost
-  hosts: CentOS
+
+- name: configure vagrant sandbox environment
+  hosts: localhost
   roles:
+<<<<<<< HEAD
+    - role: amtega.vagrant_presets
+      vagrant_presets_boxes_json_query: >-
+        [? starts_with(name, `centos-6`)
+           || starts_with(name, `centos-7`)
+           || starts_with(name, `fedora-27`)
+           || starts_with(name, `fedora-28`) ]
+  tasks:
+    - name: add network_interfaces to vagrant presets config
+      set_fact:
+        vagrant_provisioner_vms: >-
+          {{ vagrant_presets_vms | vagrant_presets_add_attributes(
+                                      { 'options': network_options} ) }}
+      vars:
+        network_options:
+          - config.vm.network "private_network", type: "dhcp"
+          - config.vm.network "private_network", type: "dhcp"
+          - config.vm.network "private_network", type: "dhcp"
+          - config.vm.network "private_network", type: "dhcp"
+  tags:
+    - sandbox
+
+# - name: run idempotence test
+#   hosts: localhost
+#   roles:
+#     - role: amtega.vagrant_sandbox
+#       vagrant_sandbox_state: started
+#   tags:
+#     - sandbox
+
+# - name: test network_interfaces role
+#   hosts: vagrant_sandbox_vms
+#   roles:
+#     - role: amtega.network_interfaces
+#   vars:
+#     network_interaces_vars: put here required variables
+#   tags:
+#     - idempotence
+
+# - name: cleanup vagrant sandbox
+#   hosts: localhost
+#   roles:
+#     - role: amtega.vagrant_sandbox
+#       vagrant_sandbox_state: absent
+#   tags:
+#     - sandbox
+=======
     - amtega.network_interfaces
+>>>>>>> master
