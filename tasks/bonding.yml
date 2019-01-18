@@ -13,7 +13,7 @@
            | list }}
       loop_control:
         loop_var: interface
-        label: "{{ inerface.logicalname }}"
+        label: "{{ interface.logicalname }}"
       notify:
         - reboot host
         - wait host
@@ -30,7 +30,7 @@
            | list }}
       loop_control:
         loop_var: interface
-        label: "{{ inerface.logicalname }}"
+        label: "{{ interface.logicalname }}"
       notify:
         - reboot host
         - wait host
