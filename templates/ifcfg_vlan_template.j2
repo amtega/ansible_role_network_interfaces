@@ -6,14 +6,14 @@ NAME="{{ device.logicalname }}.{{ device.vlanid }}"
 TYPE=Ethernet
 ONBOOT=yes
 BOOTPROTO=static
-HWADDR={{ device.macaddress }}
+HWADDR={{ device.macaddress | default(extract_mac_by_ip[device.ipv4.0.ipaddr]) }}
 {% for ip in device.ipv4 %}
 {% if loop.index == 1 %}
 IPADDR={{ ip.ipaddr }}
 PREFIX={{ ip.cidr }}
 {% else %}
 IPADDR{{ loop.index }}={{ ip.ipaddr }}
-PREFIX{{ loop.index }}={{ ip.cidr  }}
+PREFIX{{ loop.index }}={{ ip.cidr }}
 {% endif %}
 {% endfor %}
 IPV4_FAILURE_FATAL=yes

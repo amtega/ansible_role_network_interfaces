@@ -7,7 +7,7 @@
       with_items: "{{ nics }}"
       when:
         - device.vlanid is undefined
-        - item.bond is not defined
+        - device.bond is not defined
       loop_control:
         loop_var: device
       notify:
@@ -33,7 +33,7 @@
       with_items: "{{ nics }}"
       when:
         - device.vlanid is defined
-        - item.bond is not defined
+        - device.bond is not defined
       loop_control:
         loop_var: device
       notify:

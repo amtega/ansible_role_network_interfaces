@@ -4,10 +4,6 @@
       set_fact:
         extract_mac_by_ip: >-
           {{ lookup('template', 'prefetch_mac_list.j2') | from_yaml }}
-    - name: install 802.1q kernel module
-      modprobe:
-        name: 8021q
-        state: present
 
     - name: disable ipv6
       sysctl:
@@ -61,6 +57,10 @@
       template:
         src: sysconfig_network_template.j2
         dest: "{{ sysconfig_network_file_path }}"
+
+    - name: setup hostname
+      hostname:
+        name: "{{ network_interfaces_hostname }}"
 
     - name: enabled network service
       service:

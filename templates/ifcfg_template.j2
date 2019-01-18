@@ -1,21 +1,21 @@
 {{ ansible_managed | comment }}
 
 DEVICE={{ device.logicalname }}
-NAME="{{ device.logicalname }}"
+NAME={{ device.logicalname }}
 TYPE=Ethernet
 ONBOOT=yes
 NM_CONTROLLED=no
 BOOTPROTO=static
-HWADDR={{ device.macaddress | default( {{ extract_mac_by_ip[ nic.ipv4[1].ipaddr ] }} ) }}
+HWADDR={{ device.macaddress | default(extract_mac_by_ip[device.ipv4.0.ipaddr]) }}
 {% for ip in device.ipv4 %}
 {% if loop.index == 1 %}
 IPADDR={{ ip.ipaddr }}
 PREFIX={{ ip.cidr }}
 {% else %}
 IPADDR{{ loop.index }}={{ ip.ipaddr }}
-PREFIX{{ loop.index }}={{ ip.cidr  }}
+PREFIX{{ loop.index }}={{ ip.cidr }}
 {% endif %}
 {% endfor %}
-MTU={{ device.mtu }}
+MTU={{ device.mtu | default(1500) }}
 IPV4_FAILURE_FATAL=yes
 IPV6INIT=no

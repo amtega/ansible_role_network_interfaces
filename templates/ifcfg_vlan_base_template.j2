@@ -4,5 +4,5 @@ DEVICE={{ item.logicalname }}
 TYPE=Ethernet
 BOOTPROTO=none
 ONBOOT=yes
-MTU={{ item.mtu }}
+MTU={{ item.mtu | default(1500) }}
 NM_CONTROLLED=no

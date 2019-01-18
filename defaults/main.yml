@@ -1,8 +1,8 @@
 ---
 # Role default lower priority variables
-# Network general parameters
-hostname: "{{ ansible_facts.hostname }}"
-gateway: 10.0.2.1
+
+network_interfaces_hostname: "{{ inventory_hostname }}"
+network_interfaces_gateway: "{{ ansible_facts.default_ipv4.gateway }}"
 
 # DNS resolv file variables
 dns_domain: acme.com
@@ -35,7 +35,7 @@ bonding_options:
 # macaddress:      // MAC
 # ipv4:            // List of ip and cidr mask.
 # mtu:             // Default: 1500
-# route:           // List of netmask and gateway.
+# route:           // List of netmask and network_interfaces_gateway.
 # route_multicast: // Boolean.
 # vlanid:          // Vlan id
 # bond:            // Boolean.

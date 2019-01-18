@@ -18,7 +18,7 @@ nics:
     mtu: 1500
     route:
       - netmask: 69.0.2.0/24
-        gateway: 10.0.2.2
+        network_interfaces_gateway: 10.0.2.2
 
   - logicalname: backup-01
     macaddress: 08:00:27:53:c7:22

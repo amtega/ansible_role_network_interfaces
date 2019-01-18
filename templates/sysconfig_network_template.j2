@@ -1,4 +1,6 @@
+{{ ansible_managed | comment }}
+
 NETWORKING=yes
-HOSTNAME={{ hostname }}
+HOSTNAME={{ network_interfaces_hostname }}
 IPV6_INIT=no
-GATEWAY={{ gateway }}
+network_interfaces_gateway={{ network_interfaces_gateway }}
