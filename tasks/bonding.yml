@@ -13,7 +13,7 @@
            | list }}
       loop_control:
         loop_var: interface
-        label: "{{ inerface.logicalname }}"
+        label: "{{ interface.logicalname }}"
       notify:
         - reboot host
         - wait host
@@ -30,7 +30,7 @@
            | list }}
       loop_control:
         loop_var: interface
-        label: "{{ inerface.logicalname }}"
+        label: "{{ interface.logicalname }}"
       notify:
         - reboot host
         - wait host
@@ -39,10 +39,14 @@
       template:
         src: bond_config.j2
         dest: "{{ network_devices_bonding_config_path }}"
-      with_items: "{{ network_interfaces }}"
-      when:
-        - item.bond is defined
-        - item.bond_master is not defined
+      loop: >-
+        {{ network_interfaces
+           | selectattr("bond_options", "defined")
+           | selectattr("bond_master", "undefined")
+           | list }}
+      loop_control:
+        loop_var: interface
+        label: "{{ interface.logicalname }}"
       notify: load bonding module
   tags:
     - role::network_interfaces

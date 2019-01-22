@@ -18,11 +18,11 @@ network_interfaces_dns_options: []
 # the following structure:
 #
 # {
-#   logicalname: <name>       # Name for the interface in the operating system
+#   logicalname: <name>       # Name the operating system (required)
 #   macaddress: <mac>         # MAC address of the device to bind
 #   ipv4:                     # List of dicts with the ip addresses to assign
-#     - address: <ip>         # IP address
-#       cidr: <cidr>          # Network mask in CIDR format
+#     - address: <ip>         # IP address (required)
+#       cidr: <cidr>          # Network mask in CIDR format (required)
 #   mtu:                      # MTU (default is 1500)
 #   routes:                   # List of dicts to the routes to setup
 #      - net: <net>           # Net to route in the format net_address/cidr
@@ -32,6 +32,10 @@ network_interfaces_dns_options: []
 #   bond_master: <name>       # logical name of the master interface for bonding
 #   bond_options:             # List of strings with options for bonding
 # }
+#
+# The role will bind mac addresses with the specified ip addresses. If mac
+# addresses are not given, the role will bind current existent ip with their
+# respective mac addresses.
 #
 # Sample:
 #

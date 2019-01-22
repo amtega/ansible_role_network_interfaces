@@ -5,6 +5,7 @@
   service:
     name: network
     enabled: yes
+    state: started
   tags:
     - role::network_interfaces
     - role::network_interfaces::service

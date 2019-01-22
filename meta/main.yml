@@ -29,27 +29,4 @@ dependencies:
       fedora: 27
       rhel: 6
 
-  - role: amtega.packages
-    packages_os:
-      all:
-        all:
-          cobbler: present
-          cobbler-web: present
-          curl: present
-          debmirror: present
-          fence-agents: present
-          httpd: present
-          pykickstart: present
-          which: present
-          wget: present
-      centos:
-        7:
-          NetworkManager: absent
-      fedora:
-        all:
-          NetworkManager: absent
-      rhel:
-        7:
-          NetworkManager: absent
-
   - role: amtega.reboot

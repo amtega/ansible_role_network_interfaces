@@ -12,7 +12,7 @@
            | list }}
       loop_control:
         loop_var: interface
-        label: "{{ inerface.logicalname }}"
+        label: "{{ interface.logicalname }}"
       notify:
         - reboot host
         - wait host
@@ -29,7 +29,7 @@
            | list }}
       loop_control:
         loop_var: interface
-        label: "{{ inerface.logicalname }}"
+        label: "{{ interface.logicalname }}"
       notify:
         - reboot host
         - wait host
@@ -43,7 +43,7 @@
              + "ifcfg-"
              + interface.logicalname
              + "."
-             + interface.vlanid }}
+             + interface.vlanid | string }}
       loop: >-
         {{ network_interfaces
            | selectattr("vlanid", "defined")
@@ -51,7 +51,7 @@
            | list }}
       loop_control:
         loop_var: interface
-        label: "{{ inerface.logicalname }}"
+        label: "{{ interface.logicalname }}"
       notify:
         - reboot host
         - wait host

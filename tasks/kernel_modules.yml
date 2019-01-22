@@ -1,0 +1,12 @@
+---
+# Kernel modules tasks
+
+- block:
+    - include_tasks: kernel_modules_6.yml
+      when: ansible_facts.distribution_major_version is version("6", "==")
+
+    - include_tasks: kernel_modules_7.yml
+      when: ansible_facts.distribution_major_version is version(">", ">=")
+  tags:
+    - role::network_interfaces
+    - role::network_interfaces::kernel

@@ -23,4 +23,4 @@
         | length > 0
   tags:
     - role::network_interfaces
-    - role::network_interfaces::kernel
+    - role::network_interfaces::kernel_modules
