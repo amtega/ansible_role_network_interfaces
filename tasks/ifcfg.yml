@@ -43,7 +43,7 @@
              + "ifcfg-"
              + interface.logicalname
              + "."
-             + interface.vlanid }}
+             + interface.vlanid | string }}
       loop: >-
         {{ network_interfaces
            | selectattr("vlanid", "defined")

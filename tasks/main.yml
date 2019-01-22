@@ -3,17 +3,54 @@
 
 - block:
     - include_tasks: facts.yml
+      tags:
+        - role::network_interfaces::facts
+
     - include_tasks: cleanup.yml
+      tags:
+        - role::network_interfaces::cleanup
+
     - include_tasks: disable_ipv6.yml
+
+      tags:
+        - role::network_interfaces::ipv6
+
     - include_tasks: sysconfig.yml
+      tags:
+        - role::network_interfaces::sysconfig
+
     - include_tasks: hostname.yml
+      tags:
+        - role::network_interfaces::hostname
+
     - include_tasks: dns.yml
-    - include_tasks: kernel.yml
+      tags:
+        - role::network_interfaces::dns
+
+    - include_tasks: kernel_modules.yml
+      tags:
+        - role::network_interfaces::kernel_modules
+
     - include_tasks: udev.yml
+      tags:
+        - role::network_interfaces::udev
+
     - include_tasks: ifcfg.yml
+      tags:
+        - role::network_interfaces::ifcfg
+
     - include_tasks: bonding.yml
+      tags:
+        - role::network_interfaces::bonding
+
     - include_tasks: routes.yml
+      tags:
+        - role::network_interfaces::routes
+
     - include_tasks: service.yml
-    - include_tasks: reboot.yml
+      tags:
+        - role::network_interfaces::service
+
+    - meta: flush_handlers
   tags:
     - role::network_interfaces

@@ -17,7 +17,6 @@ The role setups the following facts:
 ## Dependencies
 
 - [amtega.check_platform](https://galaxy.ansible.com/amtega/check_platform)
-- [amtega.packages](https://galaxy.ansible.com/amtega/packages)
 - [amtega.reboot](https://galaxy.ansible.com/amtega/reboot)
 
 ## Example Playbook

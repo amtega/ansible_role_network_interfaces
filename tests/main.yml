@@ -11,41 +11,120 @@
            || starts_with(name, `fedora-27`)
            || starts_with(name, `fedora-28`) ]
   tasks:
-    - name: add network_interfaces to vagrant presets config
+    - name: setup fact with vagrant vms config
       set_fact:
-        vagrant_provisioner_vms: >-
-          {{ vagrant_presets_vms | vagrant_presets_add_attributes(
-                                      { 'options': network_options} ) }}
+        vagrant_sandbox_vms_config: >-
+          {{ vagrant_presets_vms
+             | vagrant_presets_add_attributes(vagrant_sandbox_vms_attributes,
+                                              overwrite=true)
+             | vagrant_presets_randomize_names }}
       vars:
-        network_options:
-          - config.vm.network "private_network", type: "dhcp"
-          - config.vm.network "private_network", type: "dhcp"
-          - config.vm.network "private_network", type: "dhcp"
-          - config.vm.network "private_network", type: "dhcp"
+        vagrant_sandbox_vms_attributes:
+          options:
+          - 'config.ssh.forward_agent = true'
+          - 'config.ssh.forward_x11 = true'
+          - 'config.vm.network "private_network", type: "dhcp"'
+          - 'config.vm.network "private_network", type: "dhcp"'
+          - 'config.vm.network "private_network", type: "dhcp"'
   tags:
     - sandbox
 
-# - name: run idempotence test
-#   hosts: localhost
-#   roles:
-#     - role: amtega.vagrant_sandbox
-#       vagrant_sandbox_state: started
-#   tags:
-#     - sandbox
+- name: run idempotence test
+  hosts: localhost
+  roles:
+    - role: amtega.vagrant_sandbox
+      vagrant_sandbox_state: started
+      vagrant_sandbox_vms: "{{ vagrant_sandbox_vms_config }}"
+  tags:
+    - sandbox
 
-# - name: test network_interfaces role
-#   hosts: vagrant_sandbox_vms
-#   roles:
-#     - role: amtega.network_interfaces
-#   vars:
-#     network_interaces_vars: put here required variables
-#   tags:
-#     - idempotence
+- name: prepare vagrants vms for test
+  hosts: vagrant_sandbox_vms
+  tasks:
+    - name: setup module loading for network device in /etc/modules-load.d
+      copy:
+        content: "e1000"
+        dest: /etc/modules-load.d/e1000.conf
+      when: ansible_facts.distribution_major_version is version("7", ">=")
 
-# - name: cleanup vagrant sandbox
-#   hosts: localhost
-#   roles:
-#     - role: amtega.vagrant_sandbox
-#       vagrant_sandbox_state: absent
-#   tags:
-#     - sandbox
+    - name: setup module loading for network device in /etc/sysconfig/modules
+      copy:
+        content: >-
+          #!/bin/sh
+          modprobe e1000 >/dev/null 2>&1
+        dest: /etc/sysconfig/modules/e1000.modules
+        mode: 0755
+      when: ansible_facts.distribution_major_version is version("6", "==")
+  tags:
+    - idempotence
+
+- name: test network_interfaces role
+  hosts: vagrant_sandbox_vms
+  roles:
+    - role: amtega.network_interfaces
+  vars:
+    vlanid: 101
+    int_01: "{{ ansible_facts.eth0 | default(ansible_facts.int_01) }}"
+    int_02: "{{ ansible_facts.eth1 | default(ansible_facts.int_02) }}"
+    int_03: >-
+      {{ ansible_facts.eth2 | default(ansible_facts["int_03." ~ vlanid]) }}
+    int_04: "{{ ansible_facts.eth3 | default(ansible_facts.int_04) }}"
+
+    network_interfaces:
+      - logicalname: int-01
+        macaddress: "{{ int_01.macaddress }}"
+        ipv4:
+          - address: "{{ int_01.ipv4.address }}"
+            cidr: >-
+              {{ (int_01.ipv4.address
+                  + "/"
+                  + int_01.ipv4.netmask)
+                 | ipaddr("prefix") }}
+        mtu: 1500
+        route_multicast: yes
+
+      - logicalname: int-02
+        macaddress: "{{ int_02.macaddress }}"
+        ipv4:
+          - address: "{{ int_02.ipv4.address }}"
+            cidr: >-
+              {{ (int_02.ipv4.address
+                  + "/"
+                  + int_02.ipv4.netmask)
+                 | ipaddr("prefix") }}
+        route:
+          - netmask: 69.0.2.0/24
+            network_interfaces_gateway: 10.0.2.2
+
+      - logicalname: int-03
+        macaddress: "{{ int_03.macaddress }}"
+        ipv4:
+          - address: "{{ int_03.ipv4.address }}"
+            cidr: >-
+              {{ (int_03.ipv4.address
+                  + "/"
+                  + int_03.ipv4.netmask)
+                 | ipaddr("prefix") }}
+        mtu: 9000
+        vlanid: "{{ vlanid }}"
+
+      - logicalname: int-04
+        macaddress: "{{ int_04.macaddress }}"
+        ipv4:
+          - address: "{{ int_04.ipv4.address }}"
+            cidr: >-
+              {{ (int_04.ipv4.address
+                  + "/"
+                  + int_04.ipv4.netmask)
+                 | ipaddr("prefix") }}
+        mtu: 1500
+  tags:
+    - idempotence
+
+- name: cleanup vagrant sandbox
+  hosts: localhost
+  roles:
+    - role: amtega.vagrant_sandbox
+      vagrant_sandbox_state: absent
+  tags:
+    - sandbox

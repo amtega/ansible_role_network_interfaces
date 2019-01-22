@@ -1,12 +1,11 @@
 {{ ansible_managed | comment }}
 
-interface={{ interface.logicalname }}
+DEVICE={{ interface.logicalname }}
 NAME={{ interface.logicalname }}
 TYPE=Ethernet
 ONBOOT=yes
 NM_CONTROLLED=no
 BOOTPROTO=static
-HWADDR={{ interface.macaddress | default(network_interfaces_ip_mac_map[interface.ipv4.0.address]) }}
 {% for ip in interface.ipv4 %}
 {% if loop.index == 1 %}
 IPADDR={{ ip.address }}

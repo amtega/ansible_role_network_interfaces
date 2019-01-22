@@ -1,7 +1,0 @@
----
-# Reboot tasks
-
-- meta: flush_handlers
-  tags:
-    - role::network_interfaces
-    - role::network_interfaces::reboot

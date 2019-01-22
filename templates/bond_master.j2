@@ -1,6 +1,6 @@
 {{ ansible_managed | comment }}
 
-interface={{ interface.logicalname }}
+DEVICE={{ interface.logicalname }}
 ONBOOT=yes
 NM_CONTROLLED=no
 BOOTPROTO=static

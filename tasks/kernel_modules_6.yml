@@ -1,0 +1,30 @@
+---
+# Kernel config tasks
+
+- block:
+    - name: configure 802.1q module
+      copy:
+        dest: /etc/sysconfig/modules/8021q.modules
+        content: >-
+          #!/bin/sh
+          modprobe 8021q >/dev/null 2>&1
+      when: >-
+        network_interfaces
+        | selectattr("vlanid", "defined")
+        | list
+        | length > 0
+
+    - name: configure bonding module
+      copy:
+        dest: /etc/sysconfig/modules/bonding.modules
+        content: >-
+          #!/bin/sh
+          modprobe bonding >/dev/null 2>&1
+      when: >-
+        network_interfaces
+        | selectattr("bond_master", "defined")
+        | list
+        | length > 0
+  tags:
+    - role::network_interfaces
+    - role::network_interfaces::kernel_modules
