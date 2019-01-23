@@ -15,5 +15,7 @@ IPADDR{{ loop.index }}={{ ip.address }}
 PREFIX{{ loop.index }}={{ ip.cidr }}
 {% endif %}
 {% endfor %}
+MTU={{ interface.mtu | default(1500) }}
+ETHTOOL_OPTIONS="{{ interface.ethtool_options | default([]) | join(' ') }}"
 IPV4_FAILURE_FATAL=yes
 IPV6INIT=no

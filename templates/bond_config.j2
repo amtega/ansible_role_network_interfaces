@@ -5,5 +5,5 @@
                     | selectattr("bond_options", "defined")
                     | list %}
 alias {{ interface.logicalname }} bonding
-options {{ interface.logicalname }} {{ bonding_options | join(" ") }}
+options {{ interface.logicalname }} {{ interface.bond_options | default([]) | join(" ") }}
 {% endfor %}
