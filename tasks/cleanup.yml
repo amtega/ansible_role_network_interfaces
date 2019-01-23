@@ -20,11 +20,12 @@
             state: absent
       when: ansible_facts.distribution_major_version is version("7", ">=")
 
-    - name: remove old interface config files
+    - name: remove unnecessary config files
       file:
         path: "{{ network_interfaces_config_file }}"
         state: absent
-      loop: "{{ lookup('template', 'files_to_clean.yml.j2') | from_yaml }}"
+      loop: >-
+        {{ lookup('template', 'files_to_clean.yml.j2') | from_yaml | unique }}
       loop_control:
         loop_var: network_interfaces_config_file
       notify:

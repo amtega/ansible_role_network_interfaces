@@ -1,7 +1,7 @@
 {{ ansible_managed | comment }}
 
 {% for route in interface.routes %}
-{{ interface.netmask }} via {{ interface.gateway }}
+{{ route.net }} via {{ route.gateway }}
 {% endfor %}
 
 {% if interface.route_multicast | default(false) %}
