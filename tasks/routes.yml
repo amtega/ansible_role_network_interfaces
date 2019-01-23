@@ -18,6 +18,7 @@
              | unique }}
       loop_control:
         loop_var: interface
+        label: "{{ interface.logicalname }}"
       notify:
         - reboot host
         - wait host

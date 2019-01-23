@@ -31,6 +31,13 @@ network_interfaces_dns_options: []
 #   vlanid: <id>              # VlAN id of the device
 #   bond_master: <name>       # logical name of the master interface for bonding
 #   bond_options:             # List of strings with options for bonding
+#     - <option1>
+#     - <option2>
+#     - <optionN>
+#   ethtool_options:          # List of strings with options for ethtool
+#     - <option1>
+#     - <option2>
+#     - <optionN>
 # }
 #
 # The role will bind mac addresses with the specified ip addresses. If mac
