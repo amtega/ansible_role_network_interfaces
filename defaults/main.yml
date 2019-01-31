@@ -48,17 +48,17 @@ network_interfaces_dns_options: []
 #
 # {
 #   logicalname: management-01
-#    macaddress: 08:00:27:06:c1:f8
-#    ipv4:
-#      - address: 10.0.2.21
-#        cidr: 24
-#    mtu: 1500
-#    route:
-#      - net: 69.0.2.0/24
-#        gateway: 10.0.2.2
-#    route_multicast: no
-#    vlanid: 1024
-#    bond: no
+#   macaddress: 08:00:27:06:c1:f8
+#   ipv4:
+#     - address: 10.0.2.21
+#       cidr: 24
+#   mtu: 1500
+#   route:
+#     - net: 69.0.2.0/24
+#       gateway: 10.0.2.2
+#   route_multicast: no
+#   vlanid: 1024
+#   bond: no
 # }
 
 network_interfaces: []
