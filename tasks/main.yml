@@ -50,7 +50,5 @@
     - include_tasks: service.yml
       tags:
         - role::network_interfaces::service
-
-    - meta: flush_handlers
   tags:
     - role::network_interfaces
