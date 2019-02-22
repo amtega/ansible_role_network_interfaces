@@ -12,7 +12,7 @@
             enabled: no
             state: stopped
           when: >-
-            'NetworkManager.service' in ansible_facts.services.keys()
+            'NetworkManager.service' in ansible_facts.services.keys() | list
 
         - name: remove NetworkManager package
           package:
