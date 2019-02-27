@@ -29,4 +29,10 @@ dependencies:
       fedora: 27
       rhel: 6
 
+  - role: amtega.grub_options
+    grub_options_present:
+      - "net.ifnames=0"
+      - "biosdevname=0"
+    when: ansible_facts.distribution_version is version_compare("7", ">=")
+
   - role: amtega.reboot
