@@ -2,18 +2,6 @@
 # Disable IPv6 tasks
 
 - block:
-    - name: disable ipv6 in sysctl
-      sysctl:
-        name: "{{ network_interfaces_sysctl_item }}"
-        value: 1
-        state: present
-        reload: yes
-      loop:
-        - net.ipv6.conf.all.disable_ipv6
-        - net.ipv6.conf.default.disable_ipv6
-      loop_control:
-        loop_var: network_interfaces_sysctl_item
-
     - name: remove ipv6 localhost address from /etc/hosts
       lineinfile:
         dest: /etc/hosts
