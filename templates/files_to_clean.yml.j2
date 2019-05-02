@@ -1,17 +1,19 @@
 {% set ns = namespace(definitive_interfaces = network_interfaces
-                                              | map(attribute='logicalname')
+                                              | selectattr("logicalname", "defined")
+                                              | map(attribute="logicalname")
                                               | list
-                                              | union(['lo']),
+                                              | union(["lo"]),
                       found=false) %}
 
-{% for interface in network_interfaces %}
+{% for interface in network_interfaces | selectattr("logicalname", "defined") | list %}
 {% if interface.vlanid is defined %}
 {% set ns.definitive_interfaces = ns.definitive_interfaces
-                                  + [ interface.logicalname ~ '.' ~ interface.vlanid ] %}
+                                  + [ interface.logicalname ~ "." ~ interface.vlanid ] %}
 {% endif %}
 {% endfor %}
 
 {% for interface in network_interfaces
+                    | selectattr("logicalname", "defined")
                     | selectattr("routes", "undefined")
                     | selectattr("route_multicast", "undefined")
                     | list %}
