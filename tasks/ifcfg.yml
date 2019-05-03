@@ -1,6 +1,6 @@
 ---
 - block:
-    - name: create config files for interfaces without vlan
+    - name: Create config files for interfaces without vlan
       template:
         src: ifcfg.j2
         dest: >-
@@ -17,7 +17,7 @@
         - reboot host
         - wait host
 
-    - name: create base config files for interfaces with vlan
+    - name: Create base config files for interfaces with vlan
       template:
         src: ifcfg_vlan_base.j2
         dest: >-
@@ -34,7 +34,7 @@
         - reboot host
         - wait host
 
-    - name: create config files for interfaces with vlan
+    - name: Create config files for interfaces with vlan
       template:
         src: ifcfg_vlan.j2
         dest: >-

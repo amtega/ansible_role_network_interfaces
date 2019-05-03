@@ -1,17 +1,17 @@
 ---
 # Tasks for testing role
 
-- name: configure vagrant sandbox environment
+- name: Configure vagrant sandbox environment
   hosts: localhost
   roles:
     - role: amtega.vagrant_presets
       vagrant_presets_boxes_json_query: >-
         [? starts_with(name, `centos-6`)
            || starts_with(name, `centos-7`)
-           || starts_with(name, `fedora-27`)
-           || starts_with(name, `fedora-28`) ]
+           || starts_with(name, `fedora-28`)
+           || starts_with(name, `fedora-29`) ]
   tasks:
-    - name: setup fact with vagrant vms config
+    - name: Setup fact with vagrant vms config
       set_fact:
         vagrant_sandbox_vms_config: >-
           {{ vagrant_presets_vms
@@ -29,7 +29,7 @@
   tags:
     - sandbox
 
-- name: run idempotence test
+- name: Run idempotence test
   hosts: localhost
   roles:
     - role: amtega.vagrant_sandbox
@@ -38,16 +38,16 @@
   tags:
     - sandbox
 
-- name: prepare vagrants vms for test
+- name: Prepare vagrant vms for test
   hosts: vagrant_sandbox_vms
   tasks:
-    - name: setup module loading for network device in /etc/modules-load.d
+    - name: Setup module loading for network device in /etc/modules-load.d
       copy:
         content: "e1000"
         dest: /etc/modules-load.d/e1000.conf
       when: ansible_facts.distribution_major_version is version("7", ">=")
 
-    - name: setup module loading for network device in /etc/sysconfig/modules
+    - name: Setup module loading for network device in /etc/sysconfig/modules
       copy:
         content: >-
           #!/bin/sh
@@ -58,7 +58,7 @@
   tags:
     - idempotence
 
-- name: test network_interfaces role
+- name: Test network_interfaces role
   hosts: vagrant_sandbox_vms
   roles:
     - role: amtega.network_interfaces
@@ -121,10 +121,11 @@
   tags:
     - idempotence
 
-- name: cleanup vagrant sandbox
+- name: Cleanup vagrant sandbox
   hosts: localhost
   roles:
     - role: amtega.vagrant_sandbox
       vagrant_sandbox_state: absent
   tags:
+    - cleanup
     - sandbox

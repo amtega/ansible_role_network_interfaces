@@ -3,10 +3,10 @@
 
 - block:
     - block:
-        - name: gather service facts
+        - name: Gather service facts
           service_facts:
 
-        - name: disable NetworkManager service
+        - name: Disable NetworkManager service
           service:
             name: NetworkManager
             enabled: no
@@ -14,13 +14,13 @@
           when: >-
             'NetworkManager.service' in ansible_facts.services.keys() | list
 
-        - name: remove NetworkManager package
+        - name: Remove NetworkManager package
           package:
             name: NetworkManager
             state: absent
       when: ansible_facts.distribution_major_version is version("7", ">=")
 
-    - name: remove unnecessary config files
+    - name: Remove unnecessary config files
       file:
         path: "{{ network_interfaces_config_file }}"
         state: absent
