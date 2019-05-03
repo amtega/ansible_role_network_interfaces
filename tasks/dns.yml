@@ -1,7 +1,7 @@
 ---
 # DNS config tasks
 
-- name: setup dns config
+- name: Setup dns config
   template:
     src: resolv.conf.j2
     dest: "{{ network_devices_resolv_config_path }}"

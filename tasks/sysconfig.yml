@@ -1,7 +1,7 @@
 ---
 # Sysconfig network tasks
 
-- name: setup main sysconfig network options
+- name: Setup main sysconfig network options
   template:
     src: sysconfig_network.j2
     dest: "{{ network_devices_network_config_path }}"

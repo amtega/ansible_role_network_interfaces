@@ -2,7 +2,7 @@
 # Bonding setup tasks
 
 - block:
-    - name: create config files for bond slave interfaces
+    - name: Create config files for bond slave interfaces
       template:
         src: bond_slave.j2
         dest: >-
@@ -18,7 +18,7 @@
         - reboot host
         - wait host
 
-    - name: create config files for bond master interfaces
+    - name: Create config files for bond master interfaces
       template:
         src: bond_master.j2
         dest: >-
@@ -35,7 +35,7 @@
         - reboot host
         - wait host
 
-    - name: create configuration file for bonding module
+    - name: Create configuration file for bonding module
       template:
         src: bond_config.j2
         dest: "{{ network_devices_bonding_config_path }}"

@@ -2,7 +2,7 @@
 # Kernel config tasks
 
 - block:
-    - name: configure 802.1q module
+    - name: Configure 802.1q module
       copy:
         dest: /etc/sysconfig/modules/8021q.modules
         content: >-
@@ -14,7 +14,7 @@
         | list
         | length > 0
 
-    - name: configure bonding module
+    - name: Configure bonding module
       copy:
         dest: /etc/sysconfig/modules/bonding.modules
         content: >-

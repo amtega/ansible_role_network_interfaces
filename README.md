@@ -25,7 +25,7 @@ This is an example playbook:
 
 ``` yaml
 ---
-- name: network_interfaces role sample
+- name: Network_interfaces role sample
   hosts: localhost
   roles:  
     - amtega.network_interfaces

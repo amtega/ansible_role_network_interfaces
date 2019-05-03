@@ -1,7 +1,7 @@
 ---
 # Hostname config tasks
 
-- name: setup hostname
+- name: Setup hostname
   hostname:
     name: "{{ network_interfaces_hostname }}"
   tags:
