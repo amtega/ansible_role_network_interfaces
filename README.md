@@ -2,10 +2,6 @@
 
 This is an [Ansible](http://www.ansible.com) role configure ipv4 network interfaces.
 
-## Requirements
-
-[Ansible 2.7+](http://docs.ansible.com/ansible/latest/intro_installation.html)
-
 ## Role Variables
 
 A list of all the default variables for this role is available in `defaults/main.yml`.
@@ -13,11 +9,6 @@ A list of all the default variables for this role is available in `defaults/main
 The role setups the following facts:
 
 - network_interfaces_ip_mac_map: dictionary mapping ip addresses to mac addresses
-
-## Dependencies
-
-- [amtega.check_platform](https://galaxy.ansible.com/amtega/check_platform)
-- [amtega.reboot](https://galaxy.ansible.com/amtega/reboot)
 
 ## Example Playbook
 
@@ -72,7 +63,7 @@ $ ansible-playbook main.yml
 
 ## License
 
-Copyright (C) 2018 AMTEGA - Xunta de Galicia
+Copyright (C) 2019 AMTEGA - Xunta de Galicia
 
 This role is free software: you can redistribute it and/or modify it under the terms of:
 

@@ -24,43 +24,17 @@ galaxy_info:
 
 dependencies:
   - role: amtega.check_platform
-    vars:
-      check_platform_distributions:
-        centos: 6
-        fedora: 27
-        rhel: 6
     tags:
-      - role::network_interfaces
+      - never
 
   - role: amtega.grub_options
-    vars:
-      grub_options_present:
-        - "net.ifnames=0"
-        - "biosdevname=0"
-    when: ansible_facts.distribution_version is version_compare("7", ">=")
     tags:
-      - role::network_interfaces
+      - never
 
   - role: amtega.sysctl
-    vars:
-      sysctl:
-        - name: disable_ipv6
-          options:
-            - name: net.ipv6.conf.all.disable_ipv6
-              value: 1
-              reload: yes
-              sysctl_set: yes
-              state: present
-            - name: net.ipv6.conf.default.disable_ipv6
-              value: 1
-              reload: yes
-              sysctl_set: yes
-              state: present
+    tags:
+      - never
 
   - role: amtega.reboot
     tags:
-      - role::network_interfaces
-
-  - role: amtega.sysctl
-    tags:
-      - role::network_interfaces
+      - never
