@@ -7,7 +7,7 @@ galaxy_info:
   description: Configure ipv4 network interfaces
   company: AMTEGA - Xunta de Galicia
   license: GPLv3 or EUPL
-  min_ansible_version: 2.7
+  min_ansible_version: 2.9
   platforms:
     - name: EL
       versions:
@@ -15,8 +15,8 @@ galaxy_info:
         - 7
     - name: Fedora
       versions:
-        - 28
         - 29
+        - 30
   galaxy_tags:
     - network
     - interfaces
@@ -24,17 +24,33 @@ galaxy_info:
 
 dependencies:
   - role: amtega.check_platform
-    tags:
-      - never
+    vars:
+      check_platform_distributions:
+        centos: 6
+        fedora: 27
+        rhel: 6
 
   - role: amtega.grub_options
-    tags:
-      - never
+    vars:
+      grub_options_present:
+        - "net.ifnames=0"
+        - "biosdevname=0"
+    when: ansible_facts.distribution_version is version_compare("7", ">=")
 
   - role: amtega.sysctl
-    tags:
-      - never
+    vars:
+      sysctl:
+        - name: disable_ipv6
+          options:
+            - name: net.ipv6.conf.all.disable_ipv6
+              value: 1
+              reload: yes
+              sysctl_set: yes
+              state: present
+            - name: net.ipv6.conf.default.disable_ipv6
+              value: 1
+              reload: yes
+              sysctl_set: yes
+              state: present
 
   - role: amtega.reboot
-    tags:
-      - never
