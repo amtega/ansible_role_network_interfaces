@@ -30,6 +30,13 @@ dependencies:
         fedora: 27
         rhel: 6
 
+  - role: amtega.packages
+    vars:
+      packages_os:
+        fedora:
+          all:
+            network-scripts: present
+
   - role: amtega.grub_options
     vars:
       grub_options_present:
