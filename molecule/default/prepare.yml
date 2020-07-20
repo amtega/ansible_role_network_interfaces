@@ -1,0 +1,26 @@
+---
+
+- name: Prepare
+  hosts: molecule_hosts
+  gather_facts: yes
+  become: yes
+  tasks:
+    - name: Setup module loading for network device in /etc/modules-load.d
+      copy:
+        content: "e1000"
+        dest: /etc/modules-load.d/e1000.conf
+      when: ansible_facts.distribution_major_version is version("7", ">=")
+
+    - block:
+        - name: Setup python for ansible
+          raw: yum install -y libselinux-python
+
+        - name: >-
+            Setup module loading for network device in /etc/sysconfig/modules
+          copy:
+            content: >-
+              #!/bin/sh
+              modprobe e1000 >/dev/null 2>&1
+            dest: /etc/sysconfig/modules/e1000.modules
+            mode: 0755
+      when: ansible_facts.distribution_major_version is version("6", "==")
