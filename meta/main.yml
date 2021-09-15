@@ -3,6 +3,7 @@
 
 galaxy_info:
   role_name: network_interfaces
+  namespace: amtega
   author: José Enrique Mourón Regueira / Juan Antonio Valiño García
   description: Configure ipv4 network interfaces
   company: AMTEGA - Xunta de Galicia
@@ -11,12 +12,12 @@ galaxy_info:
   platforms:
     - name: EL
       versions:
-        - 6
         - 7
+        - 8
     - name: Fedora
       versions:
-        - 29
-        - 30
+        - 33
+        - 34
   galaxy_tags:
     - network
     - interfaces
@@ -33,6 +34,9 @@ dependencies:
   - role: amtega.packages
     vars:
       packages_os:
+        centos:
+          8:
+            network-scripts: present
         fedora:
           all:
             network-scripts: present

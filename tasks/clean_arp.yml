@@ -1,0 +1,43 @@
+---
+# Clean local arp caché and force ping to gateway
+
+- meta: flush_handlers
+
+- name: Clean local arp cache
+  command: ip -s -s neigh flush all
+  changed_when: no
+
+- name: Test conecctivitie with the gateway
+  block:
+    - name: Check interfaces with especific route
+      command: "ping -c 4 {{ interface.routes[0].gateway }}"
+      loop: >-
+        {{ network_interfaces
+           | selectattr("routes", "defined")
+           | list }}
+      loop_control:
+        loop_var: interface
+        label: "{{ interface.logicalname }}"
+      failed_when: no
+      changed_when: no
+
+    - name: Check interfaces without especific route
+      command: >-
+        ping -c 4 {{ (interface.ipv4[0].address + '/' + interface.ipv4[0].cidr)
+              | ipaddr('network/prefix')
+              | ipaddr('1')
+              | ipaddr('address') }}
+      loop: >-
+        {{ network_interfaces
+           | selectattr("routes", "undefined")
+           | list }}
+      loop_control:
+        loop_var: interface
+        label: "{{ interface.logicalname }}"
+      register: network_interfaces_ping_result
+      failed_when: no
+      changed_when: no
+
+    - name: Debug pings
+      debug:
+        var: network_interfaces_ping_result

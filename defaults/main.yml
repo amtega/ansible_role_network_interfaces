@@ -53,7 +53,7 @@ network_interfaces_dns_options: []
 #     - address: 10.0.2.21
 #       cidr: 24
 #   mtu: 1500
-#   route:
+#   routes:
 #     - net: 69.0.2.0/24
 #       gateway: 10.0.2.2
 #   route_multicast: no
