@@ -7,6 +7,7 @@
         src: route.j2
         dest: >-
           {{ network_devices_scripts_dir }}/route-{{ interface.logicalname }}
+        mode: 0644
       loop: >-
         {{ network_interfaces
            | selectattr("routes", "defined")

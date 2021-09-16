@@ -5,6 +5,7 @@
   template:
     src: resolv.conf.j2
     dest: "{{ network_devices_resolv_config_path }}"
+    mode: 0644
   tags:
     - role::network_interfaces
     - role::network_interfaces::dns
