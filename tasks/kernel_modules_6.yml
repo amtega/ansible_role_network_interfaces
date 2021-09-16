@@ -8,6 +8,7 @@
         content: >-
           #!/bin/sh
           modprobe 8021q >/dev/null 2>&1
+        mode: 0755
       when: >-
         network_interfaces
         | selectattr("vlanid", "defined")
@@ -20,6 +21,7 @@
         content: >-
           #!/bin/sh
           modprobe bonding >/dev/null 2>&1
+        mode: 0755
       when: >-
         network_interfaces
         | selectattr("bond_master", "defined")
