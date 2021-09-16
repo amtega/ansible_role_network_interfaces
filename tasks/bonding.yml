@@ -47,7 +47,6 @@
       loop_control:
         loop_var: interface
         label: "{{ interface.logicalname }}"
-      notify: load bonding module
   tags:
     - role::network_interfaces
     - role::network_interfaces::bonding
