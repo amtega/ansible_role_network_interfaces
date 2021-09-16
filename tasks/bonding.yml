@@ -7,6 +7,7 @@
         src: bond_slave.j2
         dest: >-
           {{ network_devices_scripts_dir }}/ifcfg-{{ interface.logicalname }}
+        mode: 0755
       loop: >-
         {{ network_interfaces
            | selectattr("bond_master", "defined")
@@ -23,6 +24,7 @@
         src: bond_master.j2
         dest: >-
           {{ network_devices_scripts_dir }}/ifcfg-{{ interface.logicalname }}
+        mode: 0755
       loop: >-
         {{ network_interfaces
            | selectattr("bond_options", "defined")
@@ -39,6 +41,7 @@
       template:
         src: bond_config.j2
         dest: "{{ network_devices_bonding_config_path }}"
+        mode: 0755
       loop: >-
         {{ network_interfaces
            | selectattr("bond_options", "defined")

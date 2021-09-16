@@ -7,12 +7,12 @@ dependency:
     ignore-certs: yes
     ignore-errors: yes
     role-file: >-
-      ${MOLECULE_SCENARIO_DIRECTORY}/../resources/requirements.yml
+      ${MOLECULE_SCENARIO_DIRECTORY}/requirements.yml
     requirements-file: >-
-      ${MOLECULE_SCENARIO_DIRECTORY}/../resources/requirements.yml
+      ${MOLECULE_SCENARIO_DIRECTORY}/requirements.yml
 driver:
   name: vagrant
-lint: "${MOLECULE_SCENARIO_DIRECTORY}/../resources/linters.sh"
+lint: "${MOLECULE_SCENARIO_DIRECTORY}/linters.sh"
 platforms:
   - name: "centos7-${INSTANCE_UUID:-1}"
     box: centos/7
@@ -84,10 +84,6 @@ platforms:
       - molecule_hosts_fedora_34
 provisioner:
   name: ansible
-  playbooks:
-    prepare: ../resources/prepare.yml
-    cleanup: ../resources/cleanup.yml
-    side_effect: ../resources/side_effect.yml
   config_options:
     defaults:
       callback_enabled: profile_tasks

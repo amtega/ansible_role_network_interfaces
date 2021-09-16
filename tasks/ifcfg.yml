@@ -5,6 +5,7 @@
         src: ifcfg.j2
         dest: >-
           {{ network_devices_scripts_dir }}/ifcfg-{{ interface.logicalname }}
+        mode: 0755
       loop: >-
         {{ network_interfaces
            | selectattr("vlanid", "undefined")
@@ -22,6 +23,7 @@
         src: ifcfg_vlan_base.j2
         dest: >-
           {{ network_devices_scripts_dir }}/ifcfg-{{ interface.logicalname }}
+        mode: 0755
       loop: >-
         {{ network_interfaces
            | selectattr("vlanid", "defined")
@@ -44,6 +46,7 @@
              + interface.logicalname
              + "."
              + interface.vlanid | string }}
+        mode: 0755
       loop: >-
         {{ network_interfaces
            | selectattr("vlanid", "defined")
