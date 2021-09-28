@@ -25,7 +25,7 @@
     - name: Check interfaces without especific route
       command: >-
         /usr/bin/ping -c 4
-        {{ (interface.ipv4[0].address + '/' + interface.ipv4[0].cidr)
+        {{ (interface.ipv4[0].address + '/' ~ interface.ipv4[0].cidr)
            | ipaddr('network/prefix')
            | ipaddr('1')
            | ipaddr('address') }}
