@@ -18,6 +18,7 @@
           package:
             name: NetworkManager
             state: absent
+          environment: "{{ proxy_client_environment }}"
       when: ansible_facts.distribution_major_version is version("7", ">=")
 
     - name: Remove unnecessary config files
