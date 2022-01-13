@@ -12,12 +12,16 @@
             enabled: no
             state: stopped
           when: >-
-            'NetworkManager.service' in ansible_facts.services.keys() | list
+            "NetworkManager.service" in ansible_facts.services.keys() | list
+            and ansible_facts.services["NetworkManager.service"].status
+                | default("")
+                != "not-found"
 
         - name: Remove NetworkManager package
           package:
             name: NetworkManager
             state: absent
+          environment: "{{ proxy_client_environment }}"
       when: ansible_facts.distribution_major_version is version("7", ">=")
 
     - name: Remove unnecessary config files
