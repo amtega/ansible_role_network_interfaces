@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.0] - 2022-01-26
+### Changed
+- Supported distros. Related to ansible/main#178
+
 ## [1.3.3] - 2022-02-13
 ### Fixed
 - Fixed problem managing NetworkManager service during cleanup.
