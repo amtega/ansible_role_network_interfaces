@@ -38,7 +38,7 @@ dependencies:
   - role: amtega.packages
     vars:
       packages_os:
-        centos:
+        all:
           8:
             network-scripts: present
         fedora:
