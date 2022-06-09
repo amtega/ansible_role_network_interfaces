@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.0] - 2022-06-09
+### Changed
+- Moved dependencies to include file to avoid race conditions with hosts vars.
+
 ## [1.4.2] - 2022-02-22
 ### Fixed
 - Adapted for CentOS derived distros. Related to ansible/main#263
