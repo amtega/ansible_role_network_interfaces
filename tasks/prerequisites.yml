@@ -1,0 +1,55 @@
+---
+# Prerequisites
+
+- block:
+    - name: Setup proxy client
+      include_role:
+        name: amtega.proxy_client
+      vars:
+        proxy_client_permanent: no
+
+    - name: Setup packages
+      include_role:
+        name: amtega.packages
+      vars:
+        packages_os:
+          all:
+            8:
+              network-scripts: present
+          fedora:
+            all:
+              network-scripts: present
+
+    - name: Setup grub options
+      include_role:
+        name: amtega.grub_options
+      when: ansible_facts.distribution_version is version_compare("7", ">=")
+      vars:
+        grub_options_present:
+          - "net.ifnames=0"
+          - "biosdevname=0"
+
+    - name: Setup sysctl
+      include_role:
+        name: amtega.sysctl
+      vars:
+        sysctl_load_from_hostvars: no
+        sysctl:
+          - name: disable_ipv6
+            options:
+              - name: net.ipv6.conf.all.disable_ipv6
+                value: 1
+                reload: yes
+                sysctl_set: yes
+                state: present
+              - name: net.ipv6.conf.default.disable_ipv6
+                value: 1
+                reload: yes
+                sysctl_set: yes
+                state: present
+
+    - name: Prepare reboot
+      include_role:
+        name: amtega.reboot
+  vars:
+    packages_load_from_hostvars: no
