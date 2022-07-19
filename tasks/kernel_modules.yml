@@ -1,7 +1,7 @@
 ---
-# Kernel modules tasks
 
-- block:
+- name: Setup kernel modules
+  block:
     - include_tasks: kernel_modules_6.yml
       when: ansible_facts.distribution_major_version is version("6", "==")
 

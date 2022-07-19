@@ -1,22 +1,22 @@
 ---
-# Disable IPv6 tasks
 
-- block:
+- name: Disable ipv6
+  block:
     - name: Remove ipv6 localhost address from /etc/hosts
-      lineinfile:
+      ansible.builtin.lineinfile:
         dest: /etc/hosts
         regexp: '^\:\:1'
         state: absent
 
     - name: Prevent udp rpcbind for ipv6
-      replace:
+      ansible.builtin.replace:
         path: /etc/netconfig
         regexp: '^udp6'
         replace: '#udp6'
       when: ansible_facts.distribution_major_version is version("6", "==")
 
     - name: Prevent tcp rpcbind for ipv6
-      replace:
+      ansible.builtin.replace:
         path: /etc/netconfig
         regexp: '^tcp6'
         replace: '#tcp6'
