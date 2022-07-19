@@ -1,15 +1,15 @@
 ---
-# Prerequisites
 
-- block:
+- name: Setup pre-requisites
+  block:
     - name: Setup proxy client
-      include_role:
+      ansible.builtin.include_role:
         name: amtega.proxy_client
       vars:
         proxy_client_permanent: no
 
     - name: Setup packages
-      include_role:
+      ansible.builtin.include_role:
         name: amtega.packages
       vars:
         packages_os:
@@ -21,7 +21,7 @@
               network-scripts: present
 
     - name: Setup grub options
-      include_role:
+      ansible.builtin.include_role:
         name: amtega.grub_options
       when: ansible_facts.distribution_version is version_compare("7", ">=")
       vars:
@@ -30,7 +30,7 @@
           - "biosdevname=0"
 
     - name: Setup sysctl
-      include_role:
+      ansible.builtin.include_role:
         name: amtega.sysctl
       vars:
         sysctl_load_from_hostvars: no
@@ -49,7 +49,7 @@
                 state: present
 
     - name: Prepare reboot
-      include_role:
+      ansible.builtin.include_role:
         name: amtega.reboot
   vars:
     packages_load_from_hostvars: no

@@ -1,7 +1,9 @@
 ---
-- block:
+
+- name: Setup interfaces files
+  block:
     - name: Create config files for interfaces without vlan
-      template:
+      ansible.builtin.template:
         src: ifcfg.j2
         dest: >-
           {{ network_devices_scripts_dir }}/ifcfg-{{ interface.logicalname }}
@@ -19,7 +21,7 @@
         - wait host
 
     - name: Create base config files for interfaces with vlan
-      template:
+      ansible.builtin.template:
         src: ifcfg_vlan_base.j2
         dest: >-
           {{ network_devices_scripts_dir }}/ifcfg-{{ interface.logicalname }}
@@ -37,7 +39,7 @@
         - wait host
 
     - name: Create config files for interfaces with vlan
-      template:
+      ansible.builtin.template:
         src: ifcfg_vlan.j2
         dest: >-
           {{ network_devices_scripts_dir

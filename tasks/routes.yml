@@ -1,9 +1,9 @@
 ---
-# Routes config tasks
 
-- block:
+- name: Setup routes
+  block:
     - name: Create routes config files
-      template:
+      ansible.builtin.template:
         src: route.j2
         dest: >-
           {{ network_devices_scripts_dir }}/route-{{ interface.logicalname }}
