@@ -1,9 +1,9 @@
 ---
-# Kernel config tasks
 
-- block:
+- name: Setup kernel modules
+  block:
     - name: Configure 802.1q module
-      copy:
+      ansible.builtin.copy:
         dest: /etc/modules-load.d/8021q.conf
         content: 8021q
         mode: 0644
@@ -14,7 +14,7 @@
         | length > 0
 
     - name: Configure bonding module
-      copy:
+      ansible.builtin.copy:
         dest: /etc/modules-load.d/bonding.conf
         content: bonding
         mode: 0644

@@ -6,19 +6,21 @@
   become: yes
   tasks:
     - name: Setup module loading for network device in /etc/modules-load.d
-      copy:
+      ansible.builtin.copy:
         content: "e1000"
         dest: /etc/modules-load.d/e1000.conf
         mode: 0644
       when: ansible_facts.distribution_major_version is version("7", ">=")
 
-    - block:
+    - name: Prepare distros == 6
+      block:
         - name: Setup python for ansible
-          raw: yum install -y libselinux-python
+          ansible.builtin.raw: yum install -y libselinux-python
+          when: yes
 
         - name: >-
             Setup module loading for network device in /etc/sysconfig/modules
-          copy:
+          ansible.builtin.copy:
             content: >-
               #!/bin/sh
               modprobe e1000 >/dev/null 2>&1

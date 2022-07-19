@@ -1,9 +1,9 @@
 ---
-# Bonding setup tasks
 
-- block:
+- name: Setup bonding
+  block:
     - name: Create config files for bond slave interfaces
-      template:
+      ansible.builtin.template:
         src: bond_slave.j2
         dest: >-
           {{ network_devices_scripts_dir }}/ifcfg-{{ interface.logicalname }}
@@ -20,7 +20,7 @@
         - wait host
 
     - name: Create config files for bond master interfaces
-      template:
+      ansible.builtin.template:
         src: bond_master.j2
         dest: >-
           {{ network_devices_scripts_dir }}/ifcfg-{{ interface.logicalname }}
@@ -38,7 +38,7 @@
         - wait host
 
     - name: Create configuration file for bonding module
-      template:
+      ansible.builtin.template:
         src: bond_config.j2
         dest: "{{ network_devices_bonding_config_path }}"
         mode: 0755

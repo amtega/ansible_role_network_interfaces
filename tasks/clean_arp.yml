@@ -1,17 +1,17 @@
 ---
-# Clean local arp cache and force ping to gateways
 
 - name: Flush handlers
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
 
 - name: Clean local arp cache
-  command: /usr/sbin/ip -s -s neigh flush all
+  ansible.builtin.command: /usr/sbin/ip -s -s neigh flush all
   changed_when: no
 
 - name: Test conectivity with gateways
   block:
     - name: Check interfaces with especific route
-      command: "/usr/bin/ping -c 4 {{ interface.routes[0].gateway }}"
+      ansible.builtin.command: >-
+        /usr/bin/ping -c 4 {{ interface.routes[0].gateway }}
       loop: >-
         {{ network_interfaces
            | selectattr("routes", "defined")
@@ -23,7 +23,7 @@
       changed_when: no
 
     - name: Check interfaces without especific route
-      command: >-
+      ansible.builtin.command: >-
         /usr/bin/ping -c 4
         {{ (interface.ipv4[0].address + '/' ~ interface.ipv4[0].cidr)
            | ipaddr('network/prefix')

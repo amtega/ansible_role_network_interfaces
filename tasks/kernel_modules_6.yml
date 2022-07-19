@@ -1,9 +1,9 @@
 ---
-# Kernel config tasks
 
-- block:
+- name: Setup kernel modules
+  block:
     - name: Configure 802.1q module
-      copy:
+      ansible.builtin.copy:
         dest: /etc/sysconfig/modules/8021q.modules
         content: >-
           #!/bin/sh
@@ -16,7 +16,7 @@
         | length > 0
 
     - name: Configure bonding module
-      copy:
+      ansible.builtin.copy:
         dest: /etc/sysconfig/modules/bonding.modules
         content: >-
           #!/bin/sh

@@ -1,8 +1,7 @@
 ---
-# DNS config tasks
 
 - name: Setup dns config
-  template:
+  ansible.builtin.template:
     src: resolv.conf.j2
     dest: "{{ network_devices_resolv_config_path }}"
     mode: 0644

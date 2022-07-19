@@ -1,8 +1,7 @@
 ---
-# Service config tasks
 
 - name: Enable network service
-  service:
+  ansible.builtin.service:
     name: network
     enabled: yes
   tags:

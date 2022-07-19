@@ -1,59 +1,59 @@
 ---
-# Role tasks
 
-- block:
-    - include_tasks: prerequisites.yml
+- name: Setup network interfaces
+  block:
+    - ansible.builtin.include_tasks: prerequisites.yml
 
-    - include_tasks: facts.yml
+    - ansible.builtin.include_tasks: facts.yml
       tags:
         - role::network_interfaces::facts
 
-    - include_tasks: cleanup.yml
+    - ansible.builtin.include_tasks: cleanup.yml
       tags:
         - role::network_interfaces::cleanup
 
-    - include_tasks: disable_ipv6.yml
+    - ansible.builtin.include_tasks: disable_ipv6.yml
 
       tags:
         - role::network_interfaces::ipv6
 
-    - include_tasks: sysconfig.yml
+    - ansible.builtin.include_tasks: sysconfig.yml
       tags:
         - role::network_interfaces::sysconfig
 
-    - include_tasks: hostname.yml
+    - ansible.builtin.include_tasks: hostname.yml
       tags:
         - role::network_interfaces::hostname
 
-    - include_tasks: dns.yml
+    - ansible.builtin.include_tasks: dns.yml
       tags:
         - role::network_interfaces::dns
 
-    - include_tasks: kernel_modules.yml
+    - ansible.builtin.include_tasks: kernel_modules.yml
       tags:
         - role::network_interfaces::kernel_modules
 
-    - include_tasks: udev.yml
+    - ansible.builtin.include_tasks: udev.yml
       tags:
         - role::network_interfaces::udev
 
-    - include_tasks: ifcfg.yml
+    - ansible.builtin.include_tasks: ifcfg.yml
       tags:
         - role::network_interfaces::ifcfg
 
-    - include_tasks: bonding.yml
+    - ansible.builtin.include_tasks: bonding.yml
       tags:
         - role::network_interfaces::bonding
 
-    - include_tasks: routes.yml
+    - ansible.builtin.include_tasks: routes.yml
       tags:
         - role::network_interfaces::routes
 
-    - include_tasks: service.yml
+    - ansible.builtin.include_tasks: service.yml
       tags:
         - role::network_interfaces::service
 
-    - include_tasks: clean_arp.yml
+    - ansible.builtin.include_tasks: clean_arp.yml
       tags:
         - role::network_interfaces::service
   tags:

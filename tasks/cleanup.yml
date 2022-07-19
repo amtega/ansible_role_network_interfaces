@@ -1,13 +1,15 @@
 ---
 # Cleanup
 
-- block:
-    - block:
+- name: Cleanup
+  block:
+    - name: Cleanup NetworkManager
+      block:
         - name: Gather service facts
-          service_facts:
+          ansible.builtin.service_facts:
 
         - name: Disable NetworkManager service
-          service:
+          ansible.builtin.service:
             name: NetworkManager
             enabled: no
             state: stopped
@@ -18,14 +20,14 @@
                 != "not-found"
 
         - name: Remove NetworkManager package
-          package:
+          ansible.builtin.package:
             name: NetworkManager
             state: absent
           environment: "{{ proxy_client_environment }}"
       when: ansible_facts.distribution_major_version is version("7", ">=")
 
     - name: Remove unnecessary config files
-      file:
+      ansible.builtin.file:
         path: "{{ network_interfaces_config_file }}"
         state: absent
       loop: >-
