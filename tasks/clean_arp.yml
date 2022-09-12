@@ -26,9 +26,9 @@
       ansible.builtin.command: >-
         /usr/bin/ping -c 4
         {{ (interface.ipv4[0].address + '/' ~ interface.ipv4[0].cidr)
-           | ipaddr('network/prefix')
-           | ipaddr('1')
-           | ipaddr('address') }}
+           | ansible.utils.ipaddr('network/prefix')
+           | ansible.utils.ipaddr('1')
+           | ansible.utils.ipaddr('address') }}
       loop: >-
         {{ network_interfaces
            | selectattr("routes", "undefined")
