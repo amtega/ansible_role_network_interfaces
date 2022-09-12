@@ -115,7 +115,7 @@ provisioner:
                     {{ (int_01.ipv4.address
                         + "/"
                         + int_01.ipv4.netmask)
-                       | ipaddr("prefix") }}
+                       | ansible.utils.ipaddr("prefix") }}
               mtu: 1500
               route_multicast: yes
 
@@ -127,7 +127,7 @@ provisioner:
                     {{ (int_02.ipv4.address
                         + "/"
                         + int_02.ipv4.netmask)
-                       | ipaddr("prefix") }}
+                       | ansible.utils.ipaddr("prefix") }}
               routes:
                 - net: 69.0.2.0/24
                   gateway: 10.0.2.2
@@ -140,7 +140,7 @@ provisioner:
                     {{ (int_03.ipv4.address
                         + "/"
                         + int_03.ipv4.netmask)
-                       | ipaddr("prefix") }}
+                       | ansible.utils.ipaddr("prefix") }}
               mtu: 9000
               vlanid: "{{ vlanid }}"
 
@@ -152,7 +152,7 @@ provisioner:
                     {{ (int_04.ipv4.address
                         + "/"
                         + int_04.ipv4.netmask)
-                       | ipaddr("prefix") }}
+                       | ansible.utils.ipaddr("prefix") }}
               mtu: 1500
 
       molecule_hosts_fedora:
